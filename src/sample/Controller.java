@@ -287,7 +287,7 @@ public class Controller implements Initializable {
     private ComboBox<String> Selct_JType_Employee;
     ObservableList<String> ListOfJobtype_EN = FXCollections.observableArrayList("Administrator", "ReceptionDesk", "Technician");
     ObservableList<String> ListOfSex_EN = FXCollections.observableArrayList("Male", "Female");
-    ObservableList<String> ListOfJobtype_AR = FXCollections.observableArrayList("مدير", "استقبال", "فني");
+    ObservableList<String> ListOfJobtype_AR = FXCollections.observableArrayList("اداري", "استقبال", "فني");
     ObservableList<String> ListOfSex_AR = FXCollections.observableArrayList("ذكر", "انثى");
 
     @FXML
@@ -1064,7 +1064,7 @@ i=1000;
             //System.out.println(Selct_MoStatus_AddMO.getValue());
             String sql1 = "UPDATE  `employee` SET   EMP_NAME='" + Txfiled_Name_Employee.getText() + "',EMP_EMAIL='" + Txfiled_Email_Employee.getText() + "',EMP_ADDRESS='" + Txfiled_Address_Employee.getText() + "',EMP_MOBILE_NBER='" + Txfiled_MNum_Employee.getText()
                     + "',JOP_TYPE='" + Selct_JType_Employee.getValue() + "',SEX='" + Selct_Sex_Employee.getValue() + "',PASSWORD='" + Txfiled_Password_Employee.getText()
-                    + " 'WHERE EMPLOYEE_ID=' " + Txfiled_Num_Employee.getText() + "'";
+                    + "'WHERE EMPLOYEE_ID=' " + Txfiled_Num_Employee.getText() + "'";
 
             System.out.println(sql1);
             java.sql.Statement statement1 = connection.createStatement();

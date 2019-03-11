@@ -581,7 +581,7 @@ public class Controller_AddMO implements Initializable {
             statement1.executeUpdate(sql1);
             System.out.println(Selct_MoStatus_AddMO.getValue().equalsIgnoreCase(sql1));
 
-            if (Selct_MoStatus_AddMO.getValue().equalsIgnoreCase("paid")) {
+            if (Selct_MoStatus_AddMO.getValue().equalsIgnoreCase("paid")||Selct_MoStatus_AddMO.getValue().equalsIgnoreCase("دفعت")) {
                 Statement st3 = connection.createStatement();
                 st3.executeQuery("SELECT * FROM `maintenance_operation` ORDER BY `INVOICE_NBER` DESC LIMIT 1");
                 ResultSet rs3 = st3.getResultSet();
