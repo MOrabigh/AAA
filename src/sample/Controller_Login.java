@@ -208,9 +208,14 @@ public class Controller_Login {
                     alert2.setContentText("يوجد خطا في بيانات المستخدم");
                     alert2.showAndWait();
                 }
-            }
+            }else {
+                    //JOptionPane.showMessageDialog(null,"Hello, Welcome to Javatpoint.");  
+                    // JOptionPane.showMessageDialog(null, "Successfully Updated.", "Alert", JOptionPane.WARNING_MESSAGE);
+                    //JOptionPane.showMessageDialog(null, "Wrong !!! .", "Alert", JOptionPane.ERROR_MESSAGE);
+                    alert2.setContentText("يوجد خطا في بيانات المستخدم");
+                    alert2.showAndWait();
         }
-    }
+    }}
 
     @FXML
     private void M_Btn_Cancle_Login(ActionEvent event) {

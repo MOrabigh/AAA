@@ -41,8 +41,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.SwipeEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -323,10 +325,10 @@ public class Controller implements Initializable {
     public Tab Main_Tab;
     @FXML
     public Tab Mangment_MO_Tab;
-    @FXML
-    private JFXButton Btn_Search_SP;
 
     public int count_Language = 5;
+    @FXML
+    private JFXButton Btn_Search_SP;
 
     //int count = 0;
     @Override
@@ -758,10 +760,10 @@ i=1000;
             }
 
         }
-         Parent parent = loader.getRoot();
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(parent));
-                    stage.showAndWait();
+        Parent parent = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(parent));
+        stage.showAndWait();
 
     }
 
@@ -1957,6 +1959,65 @@ i=1000;
         System.out.println(trysql);
         Search(trysql, Choose);
     }
+
+    @FXML
+    private void Test_GetMM(MouseEvent event) {
+     String SS = (String) listv.getSelectionModel().getSelectedItem();
+      System.out.println("SS===MouseEvent"+SS);
+        if (SS.equalsIgnoreCase("- Finished maintenance operations")) {
+
+            System.out.println("- Finished maintenance operations");
+        } else if (SS.equalsIgnoreCase("- previous  maintenance operations")) {
+            System.out.println("- previous  maintenance operations");
+        }
+    
+
+    else if (SS.equalsIgnoreCase ("- financial estimate of maintenance")){ 
+        
+        System.out.println("- financial estimate of maintenance");
+    }
+    }
+
+   
+   
+    @FXML
+    private void Test_presed(KeyEvent event) {
+        //event.getCode()
+         if (event.getCode().equals(KeyCode.UP)){
+             System.out.println("upppp");
+              String SS = (String) listv.getSelectionModel().getSelectedItem();
+              System.out.println("SS===SwipeEvent"+SS);
+        if (SS.equalsIgnoreCase("- Finished maintenance operations")) {
+
+            System.out.println("- Finished maintenance operations");
+        } else if (SS.equalsIgnoreCase("- previous  maintenance operations")) {
+            System.out.println("- previous  maintenance operations");
+        }
+    
+
+    else if (SS.equalsIgnoreCase ("- financial estimate of maintenance")){ 
+        
+        System.out.println("- financial estimate of maintenance");
+        
+    }}else if (event.getCode().equals(KeyCode.DOWN)){
+             System.out.println("DOWN");
+              String SS = (String) listv.getSelectionModel().getSelectedItem();
+              System.out.println("SS===SwipeEvent"+SS);
+        if (SS.equalsIgnoreCase("- Finished maintenance operations")) {
+
+            System.out.println("- Finished maintenance operations");
+        } else if (SS.equalsIgnoreCase("- previous  maintenance operations")) {
+            System.out.println("- previous  maintenance operations");
+        }
+    
+
+    else if (SS.equalsIgnoreCase ("- financial estimate of maintenance")){ 
+        
+        System.out.println("- financial estimate of maintenance");
+    }}}
+         
+        
+    
 
     public static class AddSP {
 

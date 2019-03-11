@@ -971,10 +971,11 @@ public class Controller_AddMO implements Initializable {
     @FXML
     private void M_Txfiled_SearchSP_AddMO(KeyEvent event) {
         Choose = 2;
+  /*
         System.out.println(event.getEventType().toString());
         System.out.println("Get text ==" + event.getText());
         // System.out.println("getCharacter=== "+event.
-        System.out.println("getOnKeyPressed       " + Txfiled_SearchSP_AddMO.getOnKeyPressed().toString());
+        //System.out.println("getOnKeyPressed       " + Txfiled_SearchSP_AddMO.getOnKeyPressed().toString());
         System.out.println("Textfiled===" + Txfiled_SearchSP_AddMO.getText());
         list.clear();
         id2 += event.getText();
@@ -987,25 +988,26 @@ public class Controller_AddMO implements Initializable {
         /* if (event.getText().equals("")) {
             id2 = id2.substring(0, id2.length() - 1);
 
-        }*/
+        }
         if (event.getCode().equals(KeyCode.BACK_SPACE) || event.getCode().equals(KeyCode.DELETE)) {
             id2 = id2.substring(0, id2.length() - 1);
 
         }
-
+           
         String id1 = Txfiled_SearchSP_AddMO.getText();
         System.out.println("__________  " + id2);
         System.out.println("__________  " + id1);
         System.out.println("__________  " + Txfiled_SearchSP_AddMO.getText());
-
-        if (id2.isEmpty()) {
+*/
+        list.clear();
+        if (Txfiled_SearchSP_AddMO.getText().isEmpty()) {
             String sql1 = "SELECT * FROM spare_parts";
             System.out.println(sql1);
             Search(sql1, Choose);
 
         } else {
-            String sql1 = "SELECT * FROM spare_parts WHERE SP_NAME = '" + id2 + "'";
-            String trysql = "SELECT * FROM spare_parts WHERE SP_NAME LIKE '" + id2 + "%';";
+            String sql1 = "SELECT * FROM spare_parts WHERE SP_NAME = '" + Txfiled_SearchSP_AddMO.getText() + "'";
+            String trysql = "SELECT * FROM spare_parts WHERE SP_NAME LIKE '" + Txfiled_SearchSP_AddMO.getText() + "%';";
             System.out.println(trysql);
             Search(trysql, Choose);
 

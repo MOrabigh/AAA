@@ -1465,7 +1465,7 @@
                                     <Insets />
                                  </HBox.margin>
                               </VBox>
-                              <ListView fx:id="listv" nodeOrientation="RIGHT_TO_LEFT" prefHeight="513.0" prefWidth="196.0">
+                              <ListView fx:id="listv" nodeOrientation="RIGHT_TO_LEFT" onKeyReleased="#Test_presed" onMouseClicked="#Test_GetMM" prefHeight="513.0" prefWidth="196.0">
                                  <HBox.margin>
                                     <Insets right="10.0" top="10.0" />
                                  </HBox.margin></ListView>

@@ -138,7 +138,7 @@
                                     </VBox>
                                     <VBox alignment="CENTER" layoutX="714.0" layoutY="14.0" prefHeight="212.0" prefWidth="113.0">
                                        <children>
-                                          <JFXTextField fx:id="Txfiled_SearchSP_AddMO" alignment="CENTER" onKeyPressed="#M_Txfiled_SearchSP_AddMO" promptText="Search">
+                                          <JFXTextField fx:id="Txfiled_SearchSP_AddMO" alignment="CENTER" onKeyReleased="#M_Txfiled_SearchSP_AddMO" promptText="Search">
                                              <VBox.margin>
                                                 <Insets bottom="10.0" top="5.0" />
                                              </VBox.margin>
