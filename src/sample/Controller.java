@@ -35,6 +35,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -49,6 +50,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import net.sf.jasperreports.engine.JRException;
 
 public class Controller implements Initializable {
 
@@ -60,6 +62,7 @@ public class Controller implements Initializable {
 
     //0 equal EN    And 1 == AR
     public ListView listv;
+     ObservableList<String> items = FXCollections.observableArrayList();
 
     public ObservableList<MO> CurrnetList = FXCollections.observableArrayList();
     public ObservableList<MO> PendingList = FXCollections.observableArrayList();
@@ -69,6 +72,9 @@ public class Controller implements Initializable {
     ObservableList<String> ListOfSuppliers = FXCollections.observableArrayList();
     ObservableList<AddSP> ListOFSelectedSP = FXCollections.observableArrayList();
     ObservableList<AddSP> ListOFSP = FXCollections.observableArrayList();
+    
+    
+    
 
     @FXML
     public TableView<MO> Table_CurrentMO_MngMO;
@@ -284,6 +290,19 @@ public class Controller implements Initializable {
 
     @FXML
     private ComboBox<String> Selct_Sex_Employee;
+    @FXML
+    private ComboBox<String> Selct_Name_Employee;
+    ObservableList<String> ListOfselectName = FXCollections.observableArrayList();
+    @FXML
+    private JFXTextField Txfiled_MO_Nber;
+
+    @FXML
+    private JFXTextField Txfiled_CUS_MNBER;
+    @FXML
+    private JFXDatePicker Date_Unill;
+
+    @FXML
+    private JFXDatePicker Date_StartFrom;
 
     @FXML
     private ComboBox<String> Selct_JType_Employee;
@@ -1399,10 +1418,205 @@ i=1000;
         Txfiled_Address_Supplier.clear();
 
     }
+    @FXML
+    private void M_MousClicked_listv(ActionEvent Event) {
+        listv.setItems(items);
+
+        listv.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        //ObservableList <String> names;
+        //names= listv.getSelectionModel().getSelectedItems();
+
+        //names= listv.setItems("عمليات الصيانة الحالية");
+        // listv.getSelectionModel().getSelectedItems();
+        // System.out.println( listv.getSelectionModel().getSelectedItems());
+    }
 
     @FXML
-    private void prbuttonReports(ActionEvent event) {
+    private void prbuttonReports(ActionEvent event) throws SQLException, JRException {
+           ObservableList<String> names;
+        names = listv.getSelectionModel().getSelectedItems();
+        //names= listv.setItems("عمليات الصيانة الحالية");
+        // for (String name : names){
+        //   System.out.println("");
+        // System.out.println(names);
+
+        String SelectedItem = (String) listv.getSelectionModel().getSelectedItem();
+
+        System.out.println("HERE  B:" + SelectedItem);
+
+        if (SelectedItem.equalsIgnoreCase("- عمليات الصيانة السابقة")) {
+            System.out.println("TTTTTTTTTTTTTTTTTTTTTTT");
+
+            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('paid','disapprove') AND m.STARTING_DATE >= '" + Date_StartFrom.getValue() + "' AND m.STARTING_DATE <= '" + Date_Unill.getValue() + "'";
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+
+            printreport print = new printreport();
+            LocalDate bb = Date_StartFrom.getValue();
+            LocalDate ss = Date_Unill.getValue();
+            print.PreviousMO(bb, ss);
+            // System.out.println("hhhhhhhhhhhhhhh");
+        } else if (SelectedItem.equalsIgnoreCase("- عمليات الصيانة الحالية")) {
+            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND m.STARTING_DATE >= '" + Date_StartFrom.getValue() + "' AND m.STARTING_DATE <= '" + Date_Unill.getValue() + "'";
+
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+
+            //  listv.getSelectionModel().getSelectedItems().add("عمليات الصيانة الحالية");
+            //listv.setItems(s);
+            printreport print = new printreport();
+            LocalDate bb = Date_StartFrom.getValue();
+            LocalDate ss = Date_Unill.getValue();
+            print.CurrentMO(bb, ss);
+
+        } else if (SelectedItem.equalsIgnoreCase("- عمليات الصيانة المنتهية")) {
+            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('repaired') AND m.STARTING_DATE >= '" + Date_StartFrom.getValue() + "' AND m.STARTING_DATE <= '" + Date_Unill.getValue() + "'";
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+
+            printreport print = new printreport();
+            LocalDate bb = Date_StartFrom.getValue();
+            LocalDate ss = Date_Unill.getValue();
+            print.FinshedMO(bb, ss);
+
+        } else if (SelectedItem.equalsIgnoreCase("- تقدير مالي عن عملية صيانة")) {
+             Statement st2 = connection.createStatement();
+           String q = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('created', 'approve', 'under maintenance', 'other defects has been detected') AND m.MO_NBER = '" + Txfiled_MO_Nber.getText()+ "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
+            System.out.println(q);
+            st2.executeQuery(q);
+           ResultSet rs2 = st2.getResultSet();
+           if(rs2.first()){
+            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('created', 'approve', 'under maintenance', 'other defects has been detected') AND m.MO_NBER = '" + Txfiled_MO_Nber.getText()+ "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+
+            printreport print = new printreport();
+            String bb = Txfiled_MO_Nber.getText();
+            String ss = Txfiled_CUS_MNBER.getText();
+            print.FinancialassessReport(bb, ss);
+           }else{Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("This maintenance does not have financialassessment");
+            alert.showAndWait();
+            return;
+               
+           }
+        } else if (SelectedItem.equalsIgnoreCase("- قائمة بالعملاء")) {
+            String query = "SELECT * FROM `customer`";
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+
+            printreport print = new printreport();
+            print.CustomersList();
+
+        } else if (SelectedItem.equalsIgnoreCase("- قائمة عمليات الصيانة لعميل")) {
+            Statement st2 = connection.createStatement();
+           String q = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.MO_NBER = '" + Txfiled_MO_Nber.getText() + "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
+            System.out.println(q);
+            st2.executeQuery(q);
+           ResultSet rs2 = st2.getResultSet();
+           if(rs2.first()){
+
+            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.MO_NBER = '" + Txfiled_MO_Nber.getText() + "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+            printreport print = new printreport();
+            String bb = Txfiled_MO_Nber.getText();
+            String ss = Txfiled_CUS_MNBER.getText();
+            print.ListofcustomersMOs(bb, ss);
+           }else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("This customer does not have maintenance operation");
+            alert.showAndWait();
+            return;
+           }
+
+        } else if (SelectedItem.equalsIgnoreCase("- قائمة بالموظفين")) {
+            String query = "SELECT * FROM `employee`";
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+
+            printreport print = new printreport();
+            print.EmployeesList();
+
+        } else if (SelectedItem.equalsIgnoreCase("- قائمة عمليات الصيانة لموظف")) {
+            Statement st2 = connection.createStatement();
+           String q = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID Where e.EMP_NAME = '" + Selct_Name_Employee.getValue() + "'"; 
+            System.out.println(q);
+            st2.executeQuery(q);
+           ResultSet rs2 = st2.getResultSet();
+                if(rs2.first()){
+        
+            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID Where e.EMP_NAME = '" + Selct_Name_Employee.getValue() + "'";
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+
+            System.out.println(Selct_Name_Employee.getValue());
+
+            printreport print = new printreport();
+            String ss = Selct_Name_Employee.getValue();
+            print.ListofaemployeesMOs(ss);
+                }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("This employee does not have maintenance operation");
+            alert.showAndWait();
+            return;
+                    
+                }
+
+        } else if (SelectedItem.equalsIgnoreCase("- قائمة بالمزودين")) {
+            String query = "SELECT * FROM `supplier`";
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+
+            printreport print = new printreport();
+            print.SuppliersList();
+
+        } else if (SelectedItem.equalsIgnoreCase("- قطع على وشك النفاذ")) {
+            String query = "SELECT * FROM spare_parts WHERE `SP_QUANTITY` < `MINIMUM_QUANTITY_IN_STOCK` AND `SP_QUANTITY` <>0";
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+
+            printreport print = new printreport();
+            print.SPstobeOUTOS();
+
+        } else if (SelectedItem.equalsIgnoreCase("- قطع الغيار التي نفذت كميتها")) {
+            String query = "SELECT * FROM spare_parts WHERE `SP_QUANTITY` = 0";
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+
+            printreport print = new printreport();
+            print.SPsOUTOS();
+
+        }
+
+        //while(rs.first(rs.getString("STATE").equalsIgnoreCase("paid")|| rs.getString("STATE").equalsIgnoreCase("disapprove"))){
+        //System.out.println("bbbb");
+        //  listv.getSelectionModel().getSelectedItems();
+        //if (rs.getString("STATE").equalsIgnoreCase("paid")|| rs.getString("STATE").equalsIgnoreCase("disapprove")) {
+        //  printreport print = new printreport();
+        // print.PreviousMO();  
     }
+
+    public void loadEmp() {
+        String query = "SELECT EMP_NAME FROM employee";
+        ResultSet rs = connectionClass.execQuery(query);
+        try {
+            while (rs.next()) {
+
+                ListOfselectName.add(rs.getString("EMP_NAME"));
+
+            }
+            rs.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+    }
+    
 
     @FXML
     public void Mangment_MO_tab_selected(Event event) {

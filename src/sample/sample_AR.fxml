@@ -1368,7 +1368,7 @@
                                  <children>
                                     <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <JFXDatePicker defaultColor="BLACK" layoutX="370.0" layoutY="60.0">
+                                          <JFXDatePicker fx:id="Date_Unill" defaultColor="BLACK" layoutX="370.0" layoutY="60.0">
                                              <HBox.margin>
                                                 <Insets right="30.0" top="50.0" />
                                              </HBox.margin>
@@ -1378,7 +1378,7 @@
                                                 <Insets right="50.0" top="55.0" />
                                              </HBox.margin>
                                           </Label>
-                                          <JFXDatePicker defaultColor="BLACK">
+                                          <JFXDatePicker fx:id="Date_StartFrom" defaultColor="BLACK">
                                              <HBox.margin>
                                                 <Insets right="30.0" top="50.0" />
                                              </HBox.margin>
@@ -1430,7 +1430,7 @@
                                           <Insets bottom="5.0" top="20.0" />
                                        </VBox.margin>
                                        <children>
-                                          <ComboBox prefWidth="150.0" />
+                                          <ComboBox fx:id="Selct_Name_Employee" prefWidth="150.0" />
                                           <Label text="اسم العميل">
                                              <HBox.margin>
                                                 <Insets left="50.0" />
@@ -1446,7 +1446,7 @@
                                           <Insets />
                                        </VBox.margin>
                                        <children>
-                                          <JFXTextField alignment="CENTER">
+                                          <JFXTextField fx:id="Txfiled_MO_Nber" alignment="CENTER">
                                              <HBox.margin>
                                                 <Insets bottom="20.0" right="20.0" />
                                              </HBox.margin>
@@ -1459,7 +1459,7 @@
                                     </HBox>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <JFXTextField alignment="CENTER">
+                                          <JFXTextField fx:id="Txfiled_CUS_MNBER" alignment="CENTER">
                                              <HBox.margin>
                                                 <Insets bottom="20.0" left="290.0" right="20.0" top="20.0" />
                                              </HBox.margin>
