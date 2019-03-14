@@ -1431,7 +1431,7 @@
                                        </VBox.margin>
                                        <children>
                                           <ComboBox fx:id="Selct_Name_Employee" prefWidth="150.0" />
-                                          <Label text="اسم العميل">
+                                          <Label text="اسم الموظف">
                                              <HBox.margin>
                                                 <Insets left="50.0" />
                                              </HBox.margin>
