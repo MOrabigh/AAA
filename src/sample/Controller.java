@@ -359,8 +359,11 @@ public class Controller implements Initializable {
         loadAllMO();
         //loadAllSP();
         loadSuppliers();
-
+        listv.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        Selct_Name_Employee.setItems(ListOfselectName);
+         loadEmp();
     }
+   
 
     public void EmJob_SEX_lang(int c) {
         count_Language = c;
@@ -407,7 +410,7 @@ public class Controller implements Initializable {
 
         }
         System.out.println("AFTEER count_Language =" + count_Language);
-
+          
     }
 
     private void intilCol() {
