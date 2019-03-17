@@ -52,23 +52,38 @@
 		<band height="61" splitType="Stretch">
 			<staticText>
 				<reportElement x="460" y="2" width="85" height="20" uuid="c363d98d-85f9-4a86-923e-30347267213d"/>
-				<text><![CDATA[SP_NBER]]></text>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[رقم القطعة]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="346" y="2" width="100" height="20" uuid="f5608180-96cb-46e8-8383-3c08295e5b64"/>
-				<text><![CDATA[SP_NAME]]></text>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[اسم القطعة]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="263" y="2" width="59" height="20" uuid="2335081b-b791-44e0-a83d-91d60506f6a6"/>
-				<text><![CDATA[PRICE]]></text>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[السعر]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="131" y="2" width="100" height="20" uuid="53cfaac0-9a47-4dfb-bc4d-209f95a6d16c"/>
-				<text><![CDATA[SP_QUANTITY]]></text>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[الكمية]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="18" y="2" width="100" height="20" uuid="1181c0ad-95a7-49e0-abf5-81662ac2ea43"/>
-				<text><![CDATA[DESCRIPTION]]></text>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[وصف القطعة]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="42" width="555" height="1" uuid="80527a3d-a1c5-44fa-9ee1-b84492cf03c8"/>

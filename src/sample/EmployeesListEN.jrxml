@@ -43,7 +43,7 @@
 				<textElement textAlignment="Center">
 					<font size="20"/>
 				</textElement>
-				<text><![CDATA[قائمة بالموظفين]]></text>
+				<text><![CDATA[Employees List]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="377" y="53" width="93" height="20" uuid="1910fd2f-79ce-46ae-a0f9-b0fa844b043b"/>
@@ -56,57 +56,33 @@
 	</title>
 	<columnHeader>
 		<band height="61" splitType="Stretch">
-			<staticText>
-				<reportElement x="445" y="0" width="100" height="20" uuid="decdee5c-b8e9-4b59-beae-94571188898e"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[الرقم الوظيفي]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="323" y="0" width="100" height="20" uuid="fc5a1382-5fb0-4f06-ae57-c5aea70f23d7"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[اسم الموظف]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="158" y="0" width="126" height="20" uuid="aae11c33-1f48-4d38-915d-989a3e1947a7"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[هاتف الموظف]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="28" y="2" width="100" height="20" uuid="dafcd005-1c06-45b0-89df-d631748ea250"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[نوع الوظيفة]]></text>
-			</staticText>
 			<line>
 				<reportElement x="0" y="34" width="555" height="1" uuid="234b2ddc-5c38-46e0-8e5c-1982e1c7700f"/>
 			</line>
+			<staticText>
+				<reportElement x="18" y="0" width="100" height="20" uuid="2564acc0-9544-477c-b788-a2381b733f34"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[EMPLOYEE_ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="164" y="0" width="100" height="20" uuid="d984a1a5-0f7f-4445-b6bc-cd41615a3737"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[EMP_NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="0" width="128" height="20" uuid="6de106b7-569f-4a26-8763-f7db839080cd"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[EMP_MOBILE_NBER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="0" width="100" height="20" uuid="029bd825-97be-4797-9eec-67899799e502"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[JOP_TYPE]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="125" splitType="Stretch">
-			<textField>
-				<reportElement x="445" y="0" width="100" height="20" uuid="b5075ac9-dffe-42ef-aa1e-b8a22d9d836b"/>
-				<textFieldExpression><![CDATA[$F{EMPLOYEE_ID}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="323" y="0" width="100" height="20" uuid="8641eb0b-7a4d-4587-8616-505597a816bb"/>
-				<textFieldExpression><![CDATA[$F{EMP_NAME}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="158" y="0" width="126" height="20" uuid="f5a08bc8-ddf2-4c4c-8e03-17a2c7f3b94c"/>
-				<textFieldExpression><![CDATA[$F{EMP_MOBILE_NBER}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="28" y="0" width="100" height="20" uuid="4733b933-9b8d-4495-a0a1-ea5924edd239"/>
-				<textFieldExpression><![CDATA[$F{JOP_TYPE}]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement x="435" y="-64" width="1" height="189" uuid="27e56b01-962e-46c0-8757-93fcc247ed7c"/>
 			</line>
@@ -116,6 +92,22 @@
 			<line>
 				<reportElement x="145" y="-64" width="1" height="189" uuid="b728a918-7267-4a58-9839-7faa3b547184"/>
 			</line>
+			<textField>
+				<reportElement x="18" y="0" width="100" height="20" uuid="818a466c-1998-4cd8-804a-46e5970725e5"/>
+				<textFieldExpression><![CDATA[$F{EMPLOYEE_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="0" width="100" height="20" uuid="645cce76-0af8-4cd2-98c1-eb34d65f9c7e"/>
+				<textFieldExpression><![CDATA[$F{EMP_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="307" y="0" width="131" height="20" uuid="cc5a023d-f5b1-40c3-9e4f-0cd9e01c9400"/>
+				<textFieldExpression><![CDATA[$F{EMP_MOBILE_NBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="444" y="0" width="100" height="20" uuid="ff33bc10-7992-42c1-a995-2932c9ec459d"/>
+				<textFieldExpression><![CDATA[$F{JOP_TYPE}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

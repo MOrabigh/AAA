@@ -3,6 +3,7 @@ package sample;
 import Connectvy.ConnectionClass;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -51,6 +52,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.sf.jasperreports.engine.JRException;
+import java.time.LocalDate;
 
 public class Controller implements Initializable {
 
@@ -62,7 +64,7 @@ public class Controller implements Initializable {
 
     //0 equal EN    And 1 == AR
     public ListView listv;
-     ObservableList<String> items = FXCollections.observableArrayList();
+    ObservableList<String> items = FXCollections.observableArrayList();
 
     public ObservableList<MO> CurrnetList = FXCollections.observableArrayList();
     public ObservableList<MO> PendingList = FXCollections.observableArrayList();
@@ -72,9 +74,6 @@ public class Controller implements Initializable {
     ObservableList<String> ListOfSuppliers = FXCollections.observableArrayList();
     ObservableList<AddSP> ListOFSelectedSP = FXCollections.observableArrayList();
     ObservableList<AddSP> ListOFSP = FXCollections.observableArrayList();
-    
-    
-    
 
     @FXML
     public TableView<MO> Table_CurrentMO_MngMO;
@@ -324,7 +323,19 @@ public class Controller implements Initializable {
     private JFXTextField Txfiled_Password_Employee;
     @FXML
     private JFXTextField Txfiled_minimumQuantity_SP;
+    @FXML
+    private JFXRadioButton Rad_Last_month;
+    @FXML
+    private JFXRadioButton Rad_LastThree_months;
 
+    @FXML
+    private JFXRadioButton Rad_This_Year;
+
+    @FXML
+    private JFXRadioButton Rad_Last_Year;
+
+    @FXML
+    private JFXRadioButton Rad_Choose_Period;
     @FXML
     public Tab Tab_CustomerMangment;
     public JFXTabPane FatharTap;
@@ -361,9 +372,8 @@ public class Controller implements Initializable {
         loadSuppliers();
         listv.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         Selct_Name_Employee.setItems(ListOfselectName);
-         loadEmp();
+        loadEmp();
     }
-   
 
     public void EmJob_SEX_lang(int c) {
         count_Language = c;
@@ -385,8 +395,8 @@ public class Controller implements Initializable {
             listv.getItems().add("---------------------------");
             listv.getItems().add("- list of Suppliers");
             listv.getItems().add("---------------------------");
-            listv.getItems().add("- قطع على وشك النفاذ");
-            listv.getItems().add("- قطع الغيار التي نفذت كميتها");
+            listv.getItems().add("- Spare Parts about to be out of stock");
+            listv.getItems().add("- Spare parts out of stock");
 
         } else if (count_Language == 1) {
             Selct_JType_Employee.setItems(ListOfJobtype_AR);
@@ -410,7 +420,7 @@ public class Controller implements Initializable {
 
         }
         System.out.println("AFTEER count_Language =" + count_Language);
-          
+
     }
 
     private void intilCol() {
@@ -1421,6 +1431,7 @@ i=1000;
         Txfiled_Address_Supplier.clear();
 
     }
+
     @FXML
     private void M_MousClicked_listv(ActionEvent Event) {
         listv.setItems(items);
@@ -1436,171 +1447,605 @@ i=1000;
 
     @FXML
     private void prbuttonReports(ActionEvent event) throws SQLException, JRException {
-           ObservableList<String> names;
-        names = listv.getSelectionModel().getSelectedItems();
-        //names= listv.setItems("عمليات الصيانة الحالية");
-        // for (String name : names){
-        //   System.out.println("");
-        // System.out.println(names);
+        if (count_Language == 1) {
+            ObservableList<String> names;
+            names = listv.getSelectionModel().getSelectedItems();
+            //names= listv.setItems("عمليات الصيانة الحالية");
+            // for (String name : names){
+            //   System.out.println("");
+            // System.out.println(names);
 
-        String SelectedItem = (String) listv.getSelectionModel().getSelectedItem();
+            String SelectedItem = (String) listv.getSelectionModel().getSelectedItem();
 
-        System.out.println("HERE  B:" + SelectedItem);
+            System.out.println("HERE  B:" + SelectedItem);
 
-        if (SelectedItem.equalsIgnoreCase("- عمليات الصيانة السابقة")) {
-            System.out.println("TTTTTTTTTTTTTTTTTTTTTTT");
+            LocalDate Date = LocalDate.now();
+            if (SelectedItem.equalsIgnoreCase("- عمليات الصيانة السابقة")) {
 
-            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('paid','disapprove') AND m.STARTING_DATE >= '" + Date_StartFrom.getValue() + "' AND m.STARTING_DATE <= '" + Date_Unill.getValue() + "'";
-            System.out.println(query);
-            java.sql.Statement statement1 = connection.createStatement();
+                if (Rad_Last_month.isSelected()) {
+                    System.out.println(Rad_Last_month.getText());
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('paid','disapprove')  AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(1) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
 
-            printreport print = new printreport();
-            LocalDate bb = Date_StartFrom.getValue();
-            LocalDate ss = Date_Unill.getValue();
-            print.PreviousMO(bb, ss);
-            // System.out.println("hhhhhhhhhhhhhhh");
-        } else if (SelectedItem.equalsIgnoreCase("- عمليات الصيانة الحالية")) {
-            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND m.STARTING_DATE >= '" + Date_StartFrom.getValue() + "' AND m.STARTING_DATE <= '" + Date_Unill.getValue() + "'";
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(1);
+                    print.PreviousMO(bb, ss);
 
-            System.out.println(query);
-            java.sql.Statement statement1 = connection.createStatement();
+                } else if (Rad_LastThree_months.isSelected()) {
+                    System.out.println(Rad_LastThree_months.getText());
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('paid','disapprove')  AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(3) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
 
-            //  listv.getSelectionModel().getSelectedItems().add("عمليات الصيانة الحالية");
-            //listv.setItems(s);
-            printreport print = new printreport();
-            LocalDate bb = Date_StartFrom.getValue();
-            LocalDate ss = Date_Unill.getValue();
-            print.CurrentMO(bb, ss);
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(3);
+                    print.PreviousMO(bb, ss);
 
-        } else if (SelectedItem.equalsIgnoreCase("- عمليات الصيانة المنتهية")) {
-            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('repaired') AND m.STARTING_DATE >= '" + Date_StartFrom.getValue() + "' AND m.STARTING_DATE <= '" + Date_Unill.getValue() + "'";
-            System.out.println(query);
-            java.sql.Statement statement1 = connection.createStatement();
+                } else if (Rad_This_Year.isSelected()) {
+                    System.out.println(Rad_This_Year.getText());
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('paid','disapprove')  AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(12) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
 
-            printreport print = new printreport();
-            LocalDate bb = Date_StartFrom.getValue();
-            LocalDate ss = Date_Unill.getValue();
-            print.FinshedMO(bb, ss);
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(12);
+                    print.PreviousMO(bb, ss);
+                } else if (Rad_Last_Year.isSelected()) {
+                    System.out.println(Rad_Last_Year.getText());
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('paid','disapprove')  AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(12) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
 
-        } else if (SelectedItem.equalsIgnoreCase("- تقدير مالي عن عملية صيانة")) {
-             Statement st2 = connection.createStatement();
-           String q = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('created', 'approve', 'under maintenance', 'other defects has been detected') AND m.MO_NBER = '" + Txfiled_MO_Nber.getText()+ "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
-            System.out.println(q);
-            st2.executeQuery(q);
-           ResultSet rs2 = st2.getResultSet();
-           if(rs2.first()){
-            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('created', 'approve', 'under maintenance', 'other defects has been detected') AND m.MO_NBER = '" + Txfiled_MO_Nber.getText()+ "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
-            System.out.println(query);
-            java.sql.Statement statement1 = connection.createStatement();
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(12);
+                    print.PreviousMO(bb, ss);
 
-            printreport print = new printreport();
-            String bb = Txfiled_MO_Nber.getText();
-            String ss = Txfiled_CUS_MNBER.getText();
-            print.FinancialassessReport(bb, ss);
-           }else{Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("This maintenance does not have financialassessment");
-            alert.showAndWait();
-            return;
-               
-           }
-        } else if (SelectedItem.equalsIgnoreCase("- قائمة بالعملاء")) {
-            String query = "SELECT * FROM `customer`";
-            System.out.println(query);
-            java.sql.Statement statement1 = connection.createStatement();
+                } else if (Rad_Choose_Period.isSelected()) {
+                    System.out.println(Rad_Choose_Period.getText());
 
-            printreport print = new printreport();
-            print.CustomersList();
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('paid','disapprove') AND m.STARTING_DATE >= '" + Date_StartFrom.getValue() + "' AND m.STARTING_DATE <= '" + Date_Unill.getValue() + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
 
-        } else if (SelectedItem.equalsIgnoreCase("- قائمة عمليات الصيانة لعميل")) {
-            Statement st2 = connection.createStatement();
-           String q = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.MO_NBER = '" + Txfiled_MO_Nber.getText() + "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
-            System.out.println(q);
-            st2.executeQuery(q);
-           ResultSet rs2 = st2.getResultSet();
-           if(rs2.first()){
+                    printreport print = new printreport();
+                    LocalDate AA = Date_StartFrom.getValue();
+                    LocalDate MM = Date_Unill.getValue();
+                    print.PreviousMOPeriod(AA, MM);
+                    System.out.println("hhhhhhhhhhhhhhh");
+                }
+            } else if (SelectedItem.equalsIgnoreCase("- عمليات الصيانة الحالية")) {
+                if (Rad_Last_month.isSelected()) {
 
-            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.MO_NBER = '" + Txfiled_MO_Nber.getText() + "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
-            System.out.println(query);
-            java.sql.Statement statement1 = connection.createStatement();
-            printreport print = new printreport();
-            String bb = Txfiled_MO_Nber.getText();
-            String ss = Txfiled_CUS_MNBER.getText();
-            print.ListofcustomersMOs(bb, ss);
-           }else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("This customer does not have maintenance operation");
-            alert.showAndWait();
-            return;
-           }
+                    //String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND '" + LocalDate.now() + "'>='" + Date.minusMonths(3) + "'";
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(1) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
 
-        } else if (SelectedItem.equalsIgnoreCase("- قائمة بالموظفين")) {
-            String query = "SELECT * FROM `employee`";
-            System.out.println(query);
-            java.sql.Statement statement1 = connection.createStatement();
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(1);
+                    print.CurrentMO(bb, ss);
 
-            printreport print = new printreport();
-            print.EmployeesList();
+                } else if (Rad_LastThree_months.isSelected()) {
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(3) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
 
-        } else if (SelectedItem.equalsIgnoreCase("- قائمة عمليات الصيانة لموظف")) {
-            Statement st2 = connection.createStatement();
-           String q = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID Where e.EMP_NAME = '" + Selct_Name_Employee.getValue() + "'"; 
-            System.out.println(q);
-            st2.executeQuery(q);
-           ResultSet rs2 = st2.getResultSet();
-                if(rs2.first()){
-        
-            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID Where e.EMP_NAME = '" + Selct_Name_Employee.getValue() + "'";
-            System.out.println(query);
-            java.sql.Statement statement1 = connection.createStatement();
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(3);
+                    print.CurrentMO(bb, ss);
 
-            System.out.println(Selct_Name_Employee.getValue());
+                } else if (Rad_This_Year.isSelected()) {
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(12) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
 
-            printreport print = new printreport();
-            String ss = Selct_Name_Employee.getValue();
-            print.ListofaemployeesMOs(ss);
-                }else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("This employee does not have maintenance operation");
-            alert.showAndWait();
-            return;
-                    
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(12);
+                    print.CurrentMO(bb, ss);
+
+                } else if (Rad_Last_Year.isSelected()) {
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(12) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(12);
+                    print.CurrentMO(bb, ss);
+
+                } else if (Rad_Choose_Period.isSelected()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND m.STARTING_DATE >= '" + Date_StartFrom.getValue() + "' AND m.STARTING_DATE <= '" + Date_Unill.getValue() + "'";
+
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    //  listv.getSelectionModel().getSelectedItems().add("عمليات الصيانة الحالية");
+                    //listv.setItems(s);
+                    printreport print = new printreport();
+                    LocalDate AA = Date_StartFrom.getValue();
+                    LocalDate MM = Date_Unill.getValue();
+                    print.CurrentMOPeriod(AA, MM);
                 }
 
-        } else if (SelectedItem.equalsIgnoreCase("- قائمة بالمزودين")) {
-            String query = "SELECT * FROM `supplier`";
-            System.out.println(query);
-            java.sql.Statement statement1 = connection.createStatement();
+            } else if (SelectedItem.equalsIgnoreCase("- عمليات الصيانة المنتهية")) {
+                if (Rad_Last_month.isSelected()) {
 
-            printreport print = new printreport();
-            print.SuppliersList();
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('repaired') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(1) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
 
-        } else if (SelectedItem.equalsIgnoreCase("- قطع على وشك النفاذ")) {
-            String query = "SELECT * FROM spare_parts WHERE `SP_QUANTITY` < `MINIMUM_QUANTITY_IN_STOCK` AND `SP_QUANTITY` <>0";
-            System.out.println(query);
-            java.sql.Statement statement1 = connection.createStatement();
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(1);
+                    print.FinshedMO(bb, ss);
 
-            printreport print = new printreport();
-            print.SPstobeOUTOS();
+                } else if (Rad_LastThree_months.isSelected()) {
 
-        } else if (SelectedItem.equalsIgnoreCase("- قطع الغيار التي نفذت كميتها")) {
-            String query = "SELECT * FROM spare_parts WHERE `SP_QUANTITY` = 0";
-            System.out.println(query);
-            java.sql.Statement statement1 = connection.createStatement();
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('repaired') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(3) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
 
-            printreport print = new printreport();
-            print.SPsOUTOS();
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(3);
+                    print.FinshedMO(bb, ss);
 
-        }
+                } else if (Rad_This_Year.isSelected()) {
 
-        //while(rs.first(rs.getString("STATE").equalsIgnoreCase("paid")|| rs.getString("STATE").equalsIgnoreCase("disapprove"))){
-        //System.out.println("bbbb");
-        //  listv.getSelectionModel().getSelectedItems();
-        //if (rs.getString("STATE").equalsIgnoreCase("paid")|| rs.getString("STATE").equalsIgnoreCase("disapprove")) {
-        //  printreport print = new printreport();
-        // print.PreviousMO();  
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('repaired') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(12) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(12);
+                    print.FinshedMO(bb, ss);
+
+                } else if (Rad_Last_Year.isSelected()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('repaired') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(12) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(12);
+                    print.FinshedMO(bb, ss);
+
+                } else if (Rad_Choose_Period.isSelected()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('repaired') AND m.STARTING_DATE >= '" + Date_StartFrom.getValue() + "' AND m.STARTING_DATE <= '" + Date_Unill.getValue() + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate AA = Date_StartFrom.getValue();
+                    LocalDate MM = Date_Unill.getValue();
+                    print.FinshedMOPeriod(AA, MM);
+                }
+
+            } else if (SelectedItem.equalsIgnoreCase("- تقدير مالي عن عملية صيانة")) {
+                Statement st2 = connection.createStatement();
+                String q = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('created', 'approve', 'under maintenance', 'other defects has been detected') AND m.MO_NBER = '" + Txfiled_MO_Nber.getText() + "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
+                System.out.println(q);
+                st2.executeQuery(q);
+                ResultSet rs2 = st2.getResultSet();
+                if (rs2.first()) {
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('created', 'approve', 'under maintenance', 'other defects has been detected') AND m.MO_NBER = '" + Txfiled_MO_Nber.getText() + "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    String bb = Txfiled_MO_Nber.getText();
+                    String ss = Txfiled_CUS_MNBER.getText();
+                    print.FinancialassessReport(bb, ss);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText(null);
+                    alert.setContentText("This maintenance does not have financialassessment");
+                    alert.showAndWait();
+                    return;
+
+                }
+            } else if (SelectedItem.equalsIgnoreCase("- قائمة بالعملاء")) {
+                String query = "SELECT * FROM `customer`";
+                System.out.println(query);
+                java.sql.Statement statement1 = connection.createStatement();
+
+                printreport print = new printreport();
+                print.CustomersList();
+
+            } else if (SelectedItem.equalsIgnoreCase("- قائمة عمليات الصيانة لعميل")) {
+                Statement st2 = connection.createStatement();
+                String q = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.MO_NBER = '" + Txfiled_MO_Nber.getText() + "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
+                System.out.println(q);
+                st2.executeQuery(q);
+                ResultSet rs2 = st2.getResultSet();
+                if (rs2.first()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.MO_NBER = '" + Txfiled_MO_Nber.getText() + "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+                    printreport print = new printreport();
+                    String bb = Txfiled_MO_Nber.getText();
+                    String ss = Txfiled_CUS_MNBER.getText();
+                    print.ListofcustomersMOs(bb, ss);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText(null);
+                    alert.setContentText("العميل ليست لديه عملية صيانة");
+                    alert.showAndWait();
+                    return;
+                }
+
+            } else if (SelectedItem.equalsIgnoreCase("- قائمة بالموظفين")) {
+                String query = "SELECT * FROM `employee`";
+                System.out.println(query);
+                java.sql.Statement statement1 = connection.createStatement();
+
+                printreport print = new printreport();
+                print.EmployeesList();
+
+            } else if (SelectedItem.equalsIgnoreCase("- قائمة عمليات الصيانة لموظف")) {
+                Statement st2 = connection.createStatement();
+                String q = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID Where e.EMP_NAME = '" + Selct_Name_Employee.getValue() + "'";
+                System.out.println(q);
+                st2.executeQuery(q);
+                ResultSet rs2 = st2.getResultSet();
+                if (rs2.first()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID Where e.EMP_NAME = '" + Selct_Name_Employee.getValue() + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    System.out.println(Selct_Name_Employee.getValue());
+
+                    printreport print = new printreport();
+                    String ss = Selct_Name_Employee.getValue();
+                    print.ListofaemployeesMOs(ss);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText(null);
+                    alert.setContentText("الموظف ليست لديه عملية صيانة");
+                    alert.showAndWait();
+                    return;
+
+                }
+
+            } else if (SelectedItem.equalsIgnoreCase("- قائمة بالمزودين")) {
+                String query = "SELECT * FROM `supplier`";
+                System.out.println(query);
+                java.sql.Statement statement1 = connection.createStatement();
+
+                printreport print = new printreport();
+                print.SuppliersList();
+
+            } else if (SelectedItem.equalsIgnoreCase("- قطع على وشك النفاذ")) {
+                String query = "SELECT * FROM spare_parts WHERE `SP_QUANTITY` < `MINIMUM_QUANTITY_IN_STOCK` AND `SP_QUANTITY` <>0";
+                System.out.println(query);
+                java.sql.Statement statement1 = connection.createStatement();
+
+                printreport print = new printreport();
+                print.SPstobeOUTOS();
+
+            } else if (SelectedItem.equalsIgnoreCase("- قطع الغيار التي نفذت كميتها")) {
+                String query = "SELECT * FROM spare_parts WHERE `SP_QUANTITY` = 0";
+                System.out.println(query);
+                java.sql.Statement statement1 = connection.createStatement();
+
+                printreport print = new printreport();
+                print.SPsOUTOS();
+
+            }
+
+            
+        } else if (count_Language == 0) {
+            ObservableList<String> names;
+            names = listv.getSelectionModel().getSelectedItems();
+
+            String SelectedItem = (String) listv.getSelectionModel().getSelectedItem();
+
+            System.out.println("HERE  B:" + SelectedItem);
+            
+            LocalDate Date = LocalDate.now();
+            if (SelectedItem.equalsIgnoreCase("- previous  maintenance operations")) {
+
+                if (Rad_Last_month.isSelected()) {
+                    System.out.println(Rad_Last_month.getText());
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('paid','disapprove')  AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(1) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(1);
+                    print.PreviousMOEN(bb, ss);
+
+                } else if (Rad_LastThree_months.isSelected()) {
+                    System.out.println(Rad_LastThree_months.getText());
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('paid','disapprove')  AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(3) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(3);
+                    print.PreviousMOEN(bb, ss);
+
+                } else if (Rad_This_Year.isSelected()) {
+                    System.out.println(Rad_This_Year.getText());
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('paid','disapprove')  AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(12) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(12);
+                    print.PreviousMOEN(bb, ss);
+                } else if (Rad_Last_Year.isSelected()) {
+                    System.out.println(Rad_Last_Year.getText());
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('paid','disapprove')  AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(12) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(12);
+                    print.PreviousMOEN(bb, ss);
+
+                } else if (Rad_Choose_Period.isSelected()) {
+                    System.out.println(Rad_Choose_Period.getText());
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('paid','disapprove') AND m.STARTING_DATE >= '" + Date_StartFrom.getValue() + "' AND m.STARTING_DATE <= '" + Date_Unill.getValue() + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate AA = Date_StartFrom.getValue();
+                    LocalDate MM = Date_Unill.getValue();
+                    print.PreviousMOPeriodEN(AA, MM);
+                    System.out.println("hhhhhhhhhhhhhhh");
+                }
+            } else if (SelectedItem.equalsIgnoreCase("- current  maintenance operations")) {
+                if (Rad_Last_month.isSelected()) {
+
+                    //String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND '" + LocalDate.now() + "'>='" + Date.minusMonths(3) + "'";
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(1) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(1);
+                    print.CurrentMOEN(bb, ss);
+
+                } else if (Rad_LastThree_months.isSelected()) {
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(3) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(3);
+                    print.CurrentMOEN(bb, ss);
+
+                } else if (Rad_This_Year.isSelected()) {
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(12) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(12);
+                    print.CurrentMOEN(bb, ss);
+
+                } else if (Rad_Last_Year.isSelected()) {
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(12) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(12);
+                    print.CurrentMOEN(bb, ss);
+
+                } else if (Rad_Choose_Period.isSelected()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('approve','under maintenance') AND m.STARTING_DATE >= '" + Date_StartFrom.getValue() + "' AND m.STARTING_DATE <= '" + Date_Unill.getValue() + "'";
+
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    //  listv.getSelectionModel().getSelectedItems().add("عمليات الصيانة الحالية");
+                    //listv.setItems(s);
+                    printreport print = new printreport();
+                    LocalDate AA = Date_StartFrom.getValue();
+                    LocalDate MM = Date_Unill.getValue();
+                    print.CurrentMOPeriodEN(AA, MM);
+                }
+
+            } else if (SelectedItem.equalsIgnoreCase("- Finished maintenance operations")) {
+                if (Rad_Last_month.isSelected()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('repaired') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(1) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(1);
+                    print.FinshedMOEN(bb, ss);
+
+                } else if (Rad_LastThree_months.isSelected()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('repaired') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(3) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(3);
+                    print.FinshedMOEN(bb, ss);
+
+                } else if (Rad_This_Year.isSelected()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('repaired') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(12) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(12);
+                    print.FinshedMOEN(bb, ss);
+
+                } else if (Rad_Last_Year.isSelected()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('repaired') AND m.STARTING_DATE <= '" + LocalDate.now() + "' AND m.STARTING_DATE >= '" + Date.minusMonths(12) + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate bb = LocalDate.now();
+                    LocalDate ss = Date.minusMonths(12);
+                    print.FinshedMOEN(bb, ss);
+
+                } else if (Rad_Choose_Period.isSelected()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.STATE IN ('repaired') AND m.STARTING_DATE >= '" + Date_StartFrom.getValue() + "' AND m.STARTING_DATE <= '" + Date_Unill.getValue() + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    LocalDate AA = Date_StartFrom.getValue();
+                    LocalDate MM = Date_Unill.getValue();
+                    print.FinshedMOPeriodEN(AA, MM);
+                }
+
+            } else if (SelectedItem.equalsIgnoreCase("- financial estimate of maintenance")) {
+                Statement st2 = connection.createStatement();
+                String q = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('created', 'approve', 'under maintenance', 'other defects has been detected') AND m.MO_NBER = '" + Txfiled_MO_Nber.getText() + "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
+                System.out.println(q);
+                st2.executeQuery(q);
+                ResultSet rs2 = st2.getResultSet();
+                if (rs2.first()) {
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('created', 'approve', 'under maintenance', 'other defects has been detected') AND m.MO_NBER = '" + Txfiled_MO_Nber.getText() + "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    printreport print = new printreport();
+                    String bb = Txfiled_MO_Nber.getText();
+                    String ss = Txfiled_CUS_MNBER.getText();
+                    print.FinancialassessReportEN(bb, ss);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText(null);
+                    alert.setContentText("This maintenance does not have financialassessment");
+                    alert.showAndWait();
+                    return;
+
+                }
+            } else if (SelectedItem.equalsIgnoreCase("- list of customers")) {
+                String query = "SELECT * FROM `customer`";
+                System.out.println(query);
+                java.sql.Statement statement1 = connection.createStatement();
+
+                printreport print = new printreport();
+                print.CustomersListEN();
+
+            } else if (SelectedItem.equalsIgnoreCase("- list of customer maintenance operations")) {
+                Statement st2 = connection.createStatement();
+                String q = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.MO_NBER = '" + Txfiled_MO_Nber.getText() + "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
+                System.out.println(q);
+                st2.executeQuery(q);
+                ResultSet rs2 = st2.getResultSet();
+                if (rs2.first()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID WHERE m.MO_NBER = '" + Txfiled_MO_Nber.getText() + "' OR r.CUS_MOBILE_NBER = '" + Txfiled_CUS_MNBER.getText() + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+                    printreport print = new printreport();
+                    String bb = Txfiled_MO_Nber.getText();
+                    String ss = Txfiled_CUS_MNBER.getText();
+                    print.ListofcustomersMOsEN(bb, ss);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText(null);
+                    alert.setContentText("This customer does not have maintenance operation");
+                    alert.showAndWait();
+                    return;
+                }
+
+            } else if (SelectedItem.equalsIgnoreCase("- list of employees")) {
+                String query = "SELECT * FROM `employee`";
+                System.out.println(query);
+                java.sql.Statement statement1 = connection.createStatement();
+
+                printreport print = new printreport();
+                print.EmployeesListEN();
+
+            } else if (SelectedItem.equalsIgnoreCase("- List of maintenance operations for an employee")) {
+                Statement st2 = connection.createStatement();
+                String q = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID Where e.EMP_NAME = '" + Selct_Name_Employee.getValue() + "'";
+                System.out.println(q);
+                st2.executeQuery(q);
+                ResultSet rs2 = st2.getResultSet();
+                if (rs2.first()) {
+
+                    String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID Where e.EMP_NAME = '" + Selct_Name_Employee.getValue() + "'";
+                    System.out.println(query);
+                    java.sql.Statement statement1 = connection.createStatement();
+
+                    System.out.println(Selct_Name_Employee.getValue());
+
+                    printreport print = new printreport();
+                    String ss = Selct_Name_Employee.getValue();
+                    print.ListofaemployeesMOsEN(ss);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText(null);
+                    alert.setContentText("This employee does not have maintenance operation");
+                    alert.showAndWait();
+                    return;
+
+                }
+
+            } else if (SelectedItem.equalsIgnoreCase("- list of Suppliers")) {
+                String query = "SELECT * FROM `supplier`";
+                System.out.println(query);
+                java.sql.Statement statement1 = connection.createStatement();
+
+                printreport print = new printreport();
+                print.SuppliersListEN();
+
+            } else if (SelectedItem.equalsIgnoreCase("- Spare Parts about to be out of stock")) {
+                String query = "SELECT * FROM spare_parts WHERE `SP_QUANTITY` < `MINIMUM_QUANTITY_IN_STOCK` AND `SP_QUANTITY` <>0";
+                System.out.println(query);
+                java.sql.Statement statement1 = connection.createStatement();
+
+                printreport print = new printreport();
+                print.SPstobeOUTOSEN();
+
+            } else if (SelectedItem.equalsIgnoreCase("- Spare parts out of stock")) {
+                String query = "SELECT * FROM spare_parts WHERE `SP_QUANTITY` = 0";
+                System.out.println(query);
+                java.sql.Statement statement1 = connection.createStatement();
+
+                printreport print = new printreport();
+                print.SPsOUTOSEN();
+
+            }
+
+
+         }
     }
 
     public void loadEmp() {
@@ -1619,7 +2064,6 @@ i=1000;
 
         }
     }
-    
 
     @FXML
     public void Mangment_MO_tab_selected(Event event) {
@@ -2179,62 +2623,51 @@ i=1000;
 
     @FXML
     private void Test_GetMM(MouseEvent event) {
-     String SS = (String) listv.getSelectionModel().getSelectedItem();
-      System.out.println("SS===MouseEvent"+SS);
+        String SS = (String) listv.getSelectionModel().getSelectedItem();
+        System.out.println("SS===MouseEvent" + SS);
         if (SS.equalsIgnoreCase("- Finished maintenance operations")) {
 
             System.out.println("- Finished maintenance operations");
         } else if (SS.equalsIgnoreCase("- previous  maintenance operations")) {
             System.out.println("- previous  maintenance operations");
+        } else if (SS.equalsIgnoreCase("- financial estimate of maintenance")) {
+
+            System.out.println("- financial estimate of maintenance");
         }
-    
-
-    else if (SS.equalsIgnoreCase ("- financial estimate of maintenance")){ 
-        
-        System.out.println("- financial estimate of maintenance");
-    }
     }
 
-   
-   
     @FXML
     private void Test_presed(KeyEvent event) {
         //event.getCode()
-         if (event.getCode().equals(KeyCode.UP)){
-             System.out.println("upppp");
-              String SS = (String) listv.getSelectionModel().getSelectedItem();
-              System.out.println("SS===SwipeEvent"+SS);
-        if (SS.equalsIgnoreCase("- Finished maintenance operations")) {
+        if (event.getCode().equals(KeyCode.UP)) {
+            System.out.println("upppp");
+            String SS = (String) listv.getSelectionModel().getSelectedItem();
+            System.out.println("SS===SwipeEvent" + SS);
+            if (SS.equalsIgnoreCase("- Finished maintenance operations")) {
 
-            System.out.println("- Finished maintenance operations");
-        } else if (SS.equalsIgnoreCase("- previous  maintenance operations")) {
-            System.out.println("- previous  maintenance operations");
+                System.out.println("- Finished maintenance operations");
+            } else if (SS.equalsIgnoreCase("- previous  maintenance operations")) {
+                System.out.println("- previous  maintenance operations");
+            } else if (SS.equalsIgnoreCase("- financial estimate of maintenance")) {
+
+                System.out.println("- financial estimate of maintenance");
+
+            }
+        } else if (event.getCode().equals(KeyCode.DOWN)) {
+            System.out.println("DOWN");
+            String SS = (String) listv.getSelectionModel().getSelectedItem();
+            System.out.println("SS===SwipeEvent" + SS);
+            if (SS.equalsIgnoreCase("- Finished maintenance operations")) {
+
+                System.out.println("- Finished maintenance operations");
+            } else if (SS.equalsIgnoreCase("- previous  maintenance operations")) {
+                System.out.println("- previous  maintenance operations");
+            } else if (SS.equalsIgnoreCase("- financial estimate of maintenance")) {
+
+                System.out.println("- financial estimate of maintenance");
+            }
         }
-    
-
-    else if (SS.equalsIgnoreCase ("- financial estimate of maintenance")){ 
-        
-        System.out.println("- financial estimate of maintenance");
-        
-    }}else if (event.getCode().equals(KeyCode.DOWN)){
-             System.out.println("DOWN");
-              String SS = (String) listv.getSelectionModel().getSelectedItem();
-              System.out.println("SS===SwipeEvent"+SS);
-        if (SS.equalsIgnoreCase("- Finished maintenance operations")) {
-
-            System.out.println("- Finished maintenance operations");
-        } else if (SS.equalsIgnoreCase("- previous  maintenance operations")) {
-            System.out.println("- previous  maintenance operations");
-        }
-    
-
-    else if (SS.equalsIgnoreCase ("- financial estimate of maintenance")){ 
-        
-        System.out.println("- financial estimate of maintenance");
-    }}}
-         
-        
-    
+    }
 
     public static class AddSP {
 

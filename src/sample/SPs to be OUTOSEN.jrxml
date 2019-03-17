@@ -4,7 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
-		<![CDATA[SELECT * FROM spare_parts WHERE `SP_QUANTITY` = 0]]>
+		<![CDATA[SELECT * FROM spare_parts WHERE `SP_QUANTITY` < `MINIMUM_QUANTITY_IN_STOCK` AND `SP_QUANTITY` <>0]]>
 	</queryString>
 	<field name="SP_NBER" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -33,97 +33,92 @@
 				<reportElement x="88" y="5" width="402" height="68" uuid="b0df03f3-8863-493c-84f9-7945da70fddb"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="184" y="20" width="205" height="34" uuid="cf69ede5-a478-464f-aa54-14adf56caf03"/>
+				<reportElement x="184" y="20" width="242" height="34" uuid="cf69ede5-a478-464f-aa54-14adf56caf03"/>
 				<textElement textAlignment="Center">
-					<font size="20"/>
+					<font size="14"/>
 				</textElement>
-				<text><![CDATA[قطع الغيار التي نفذت كميتها ]]></text>
+				<text><![CDATA[Spare parts about to be out of stock]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="377" y="53" width="93" height="20" uuid="1910fd2f-79ce-46ae-a0f9-b0fa844b043b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="76" width="555" height="1" uuid="1fdd493d-2747-41bf-9b1c-3bda87772ee7"/>
+				<reportElement x="0" y="76" width="555" height="1" uuid="225a006a-c0bc-4695-908e-7d9315079be9"/>
 			</line>
 		</band>
 	</title>
 	<columnHeader>
 		<band height="61" splitType="Stretch">
-			<staticText>
-				<reportElement x="460" y="2" width="85" height="20" uuid="c363d98d-85f9-4a86-923e-30347267213d"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[رقم القطعة]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="346" y="2" width="100" height="20" uuid="f5608180-96cb-46e8-8383-3c08295e5b64"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[اسم القطعة]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="255" y="2" width="67" height="20" uuid="2335081b-b791-44e0-a83d-91d60506f6a6"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[السعر]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="131" y="2" width="100" height="20" uuid="53cfaac0-9a47-4dfb-bc4d-209f95a6d16c"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[الكمية]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="18" y="2" width="100" height="20" uuid="1181c0ad-95a7-49e0-abf5-81662ac2ea43"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[وصف القطعة]]></text>
-			</staticText>
 			<line>
-				<reportElement x="0" y="36" width="555" height="1" uuid="15514bff-1378-495c-970b-ec7b5e597388"/>
+				<reportElement x="0" y="42" width="555" height="1" uuid="80527a3d-a1c5-44fa-9ee1-b84492cf03c8"/>
 			</line>
+			<staticText>
+				<reportElement x="18" y="0" width="100" height="20" uuid="ee1108e9-b988-4b7a-8af6-5c04ab57d4eb"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SP_NBER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="133" y="2" width="100" height="20" uuid="29820f16-6e71-4179-8592-f0563cf3341e"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SP_NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="2" width="91" height="20" uuid="6769f17f-73c9-4933-a60a-b30e570de284"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="336" y="2" width="100" height="20" uuid="b30dfdfd-bc69-48bd-8f39-2da78b3829ad"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SP_QUANTITY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="457" y="0" width="100" height="20" uuid="92bf8d5b-5896-4f38-af5a-9638bc62a62b"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DESCRIPTION]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="125" splitType="Stretch">
+			<line>
+				<reportElement x="453" y="-63" width="1" height="188" uuid="0287d8de-3082-4a3a-bd2e-df24e977ad83"/>
+			</line>
+			<line>
+				<reportElement x="335" y="-63" width="1" height="188" uuid="9b4cb2b0-a5a2-49f4-9270-b28227b0a62b"/>
+			</line>
+			<line>
+				<reportElement x="243" y="-63" width="1" height="188" uuid="2a9c2603-078f-4c06-a918-407c2b7f828e"/>
+			</line>
+			<line>
+				<reportElement x="124" y="-61" width="1" height="186" uuid="898f1f3e-83b5-4421-be70-13953361077d"/>
+			</line>
 			<textField>
-				<reportElement x="460" y="0" width="80" height="20" uuid="e28d9b16-b3a7-48e8-bba8-4b077f99f904"/>
+				<reportElement x="18" y="0" width="100" height="20" uuid="4c2f1bc1-4857-4637-a482-c11cbd36d768"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{SP_NBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="346" y="0" width="100" height="20" uuid="1beacee5-1125-4fde-98de-bf00e3137d75"/>
+				<reportElement x="133" y="0" width="100" height="20" uuid="b6b6a259-7cd9-4722-b48f-ffd7e261c599"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{SP_NAME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="255" y="0" width="67" height="20" uuid="015bdeea-83c1-4656-8023-3c81dac981df"/>
+				<reportElement x="249" y="0" width="79" height="20" uuid="937f4359-712d-44c0-ac4a-fcad4cc56ed9"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{PRICE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="131" y="0" width="100" height="20" uuid="4b997a0c-d3cc-43c1-b1f4-a36706b96b7e"/>
+				<reportElement x="342" y="0" width="100" height="20" uuid="3b0a0ff0-4ceb-43d0-80d7-83aa0742e35e"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{SP_QUANTITY}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="18" y="0" width="100" height="20" uuid="69c86a18-51f3-4eaa-8878-110fe69810d3"/>
+				<reportElement x="457" y="0" width="100" height="20" uuid="f04fc220-a295-4ff2-93df-f8a0c0ccb512"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="452" y="-63" width="1" height="188" uuid="167aff03-1eff-4303-8be5-48b0ea7870bc"/>
-			</line>
-			<line>
-				<reportElement x="333" y="-63" width="1" height="188" uuid="6a27ead7-0ca4-45e1-8083-abac3008f497"/>
-			</line>
-			<line>
-				<reportElement x="242" y="-63" width="1" height="188" uuid="170c8783-a629-42ba-8272-aebeca136865"/>
-			</line>
-			<line>
-				<reportElement x="124" y="-63" width="1" height="188" uuid="c72ba22f-0ce7-47fd-a632-43457b43dfd8"/>
-			</line>
 		</band>
 	</detail>
 	<columnFooter>

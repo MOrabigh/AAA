@@ -1335,29 +1335,29 @@
                                  <children>
                                     <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <JFXDatePicker defaultColor="BLACK" layoutX="370.0" layoutY="60.0">
+                                          <Label layoutX="571.0" layoutY="65.0" text="From:">
+                                             <HBox.margin>
+                                                <Insets right="20.0" top="60.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <JFXDatePicker fx:id="Date_StartFrom" defaultColor="BLACK" layoutX="370.0" layoutY="60.0">
                                              <HBox.margin>
                                                 <Insets right="30.0" top="50.0" />
                                              </HBox.margin>
                                           </JFXDatePicker>
-                                          <Label layoutX="571.0" layoutY="65.0" text="الى:">
+                                          <Label text="To:">
                                              <HBox.margin>
-                                                <Insets right="50.0" top="55.0" />
+                                                <Insets right="20.0" top="60.0" />
                                              </HBox.margin>
                                           </Label>
-                                          <JFXDatePicker defaultColor="BLACK">
+                                          <JFXDatePicker fx:id="Date_Unill" defaultColor="BLACK">
                                              <HBox.margin>
                                                 <Insets right="30.0" top="50.0" />
                                              </HBox.margin>
                                           </JFXDatePicker>
-                                          <Label text="من: ">
-                                             <HBox.margin>
-                                                <Insets right="50.0" top="55.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <VBox prefHeight="100.0" prefWidth="125.0">
+                                          <VBox prefHeight="155.0" prefWidth="159.0">
                                              <children>
-                                                <JFXRadioButton nodeOrientation="LEFT_TO_RIGHT" text="اخر شهر">
+                                                <JFXRadioButton fx:id="Rad_Last_month" nodeOrientation="LEFT_TO_RIGHT" text="Last Month">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
@@ -1365,22 +1365,22 @@
                                                       <ToggleGroup fx:id="ReportsDate" />
                                                    </toggleGroup>
                                                 </JFXRadioButton>
-                                                <JFXRadioButton nodeOrientation="LEFT_TO_RIGHT" text="اخر ثلاث اشهر" toggleGroup="$ReportsDate">
+                                                <JFXRadioButton fx:id="Rad_LastThree_months" nodeOrientation="LEFT_TO_RIGHT" text="Last Three Months" toggleGroup="$ReportsDate">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
                                                 </JFXRadioButton>
-                                                <JFXRadioButton nodeOrientation="LEFT_TO_RIGHT" text="السنة الحالية" toggleGroup="$ReportsDate">
+                                                <JFXRadioButton fx:id="Rad_This_Year" nodeOrientation="LEFT_TO_RIGHT" text="Current Year" toggleGroup="$ReportsDate">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
                                                 </JFXRadioButton>
-                                                <JFXRadioButton nodeOrientation="LEFT_TO_RIGHT" text="اخر سنة" toggleGroup="$ReportsDate">
+                                                <JFXRadioButton fx:id="Rad_Last_Year" nodeOrientation="LEFT_TO_RIGHT" text="Last Year " toggleGroup="$ReportsDate">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
                                                 </JFXRadioButton>
-                                                <JFXRadioButton nodeOrientation="LEFT_TO_RIGHT" style="-jfx-selected-color: black;" text="اختيار الفترة" toggleGroup="$ReportsDate">
+                                                <JFXRadioButton fx:id="Rad_Choose_Period" nodeOrientation="LEFT_TO_RIGHT" style="-jfx-selected-color: black;" text="Choose Period" toggleGroup="$ReportsDate">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
@@ -1389,60 +1389,63 @@
                                           </VBox>
                                        </children>
                                     </HBox>
-                                    <HBox alignment="CENTER" prefHeight="206.0" prefWidth="857.0">
-                                       <children>
-                                          <TableView prefHeight="206.0" prefWidth="686.0">
-                                             <columns>
-                                                <TableColumn prefWidth="448.0" text="اسم الموظف" />
-                                                <TableColumn prefWidth="235.0" text="رقم الموظف" />
-                                             </columns>
-                                          </TableView>
-                                          <JFXTextField alignment="CENTER" promptText="رقم الموظف">
-                                             <HBox.margin>
-                                                <Insets bottom="20.0" right="20.0" />
-                                             </HBox.margin>
-                                             <padding>
-                                                <Insets left="10.0" right="10.0" />
-                                             </padding>
-                                          </JFXTextField>
-                                       </children>
+                                    <HBox alignment="CENTER" prefHeight="148.0" prefWidth="857.0">
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
                                        <VBox.margin>
                                           <Insets bottom="5.0" top="20.0" />
                                        </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER" prefHeight="186.0" prefWidth="857.0">
                                        <children>
-                                          <TableView prefHeight="137.0" prefWidth="683.0">
-                                             <columns>
-                                                <TableColumn prefWidth="342.0" text="وصف الجهاز" />
-                                                <TableColumn minWidth="0.0" prefWidth="201.0" text="اسم العميل" />
-                                                <TableColumn minWidth="0.0" prefWidth="139.0" text="رقم عملية الصيانة" />
-                                             </columns>
-                                          </TableView>
-                                          <VBox prefHeight="137.0" prefWidth="170.0">
-                                             <children>
-                                                <JFXTextField alignment="CENTER" promptText="عملية الصيانة">
-                                                   <VBox.margin>
-                                                      <Insets left="5.0" right="5.0" top="40.0" />
-                                                   </VBox.margin>
-                                                </JFXTextField>
-                                                <JFXTextField alignment="CENTER" layoutX="10.0" layoutY="10.0" promptText="هاتف العميل">
-                                                   <VBox.margin>
-                                                      <Insets left="5.0" right="5.0" top="10.0" />
-                                                   </VBox.margin>
-                                                </JFXTextField>
-                                             </children>
-                                          </VBox>
+                                          <Label prefHeight="21.0" prefWidth="145.0" text="Employee Name" />
+                                          <ComboBox fx:id="Selct_Name_Employee" prefWidth="150.0" />
                                        </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="126.0" prefWidth="857.0">
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
+                                       <children>
+                                          <Label prefHeight="21.0" prefWidth="179.0" text="Maintenance Number">
+                                             <padding>
+                                                <Insets right="30.0" />
+                                             </padding>
+                                             <HBox.margin>
+                                                <Insets left="100.0" top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <JFXTextField fx:id="Txfiled_MO_Nber" prefHeight="21.0" prefWidth="205.0">
+                                             <padding>
+                                                <Insets left="20.0" right="20.0" />
+                                             </padding>
+                                             <HBox.margin>
+                                                <Insets right="100.0" />
+                                             </HBox.margin>
+                                          </JFXTextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label prefHeight="21.0" prefWidth="204.0" text="Customer Mobile Number">
+                                             <HBox.margin>
+                                                <Insets left="200.0" top="50.0" />
+                                             </HBox.margin>
+                                             <padding>
+                                                <Insets right="30.0" />
+                                             </padding>
+                                          </Label>
+                                          <JFXTextField fx:id="Txfiled_CUS_MNBER" prefHeight="31.0" prefWidth="174.0">
+                                             <HBox.margin>
+                                                <Insets right="100.0" top="30.0" />
+                                             </HBox.margin>
+                                          </JFXTextField>
+                                       </children>
+                                       <padding>
+                                          <Insets left="20.0" right="20.0" />
+                                       </padding>
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="27.0" prefWidth="857.0">
                                        <children>

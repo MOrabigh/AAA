@@ -1390,7 +1390,7 @@
                                           </Label>
                                           <VBox prefHeight="100.0" prefWidth="125.0">
                                              <children>
-                                                <JFXRadioButton nodeOrientation="LEFT_TO_RIGHT" text="اخر شهر">
+                                                <JFXRadioButton fx:id="Rad_Last_month" nodeOrientation="LEFT_TO_RIGHT" text="اخر شهر">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
@@ -1398,22 +1398,22 @@
                                                       <ToggleGroup fx:id="ReportsDate" />
                                                    </toggleGroup>
                                                 </JFXRadioButton>
-                                                <JFXRadioButton nodeOrientation="LEFT_TO_RIGHT" text="اخر ثلاث اشهر" toggleGroup="$ReportsDate">
+                                                <JFXRadioButton fx:id="Rad_LastThree_months" nodeOrientation="LEFT_TO_RIGHT" text="اخر ثلاث اشهر" toggleGroup="$ReportsDate">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
                                                 </JFXRadioButton>
-                                                <JFXRadioButton nodeOrientation="LEFT_TO_RIGHT" text="السنة الحالية" toggleGroup="$ReportsDate">
+                                                <JFXRadioButton fx:id="Rad_This_Year" nodeOrientation="LEFT_TO_RIGHT" text="السنة الحالية" toggleGroup="$ReportsDate">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
                                                 </JFXRadioButton>
-                                                <JFXRadioButton nodeOrientation="LEFT_TO_RIGHT" text="اخر سنة" toggleGroup="$ReportsDate">
+                                                <JFXRadioButton fx:id="Rad_Last_Year" nodeOrientation="LEFT_TO_RIGHT" text="اخر سنة" toggleGroup="$ReportsDate">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
                                                 </JFXRadioButton>
-                                                <JFXRadioButton nodeOrientation="LEFT_TO_RIGHT" style="-jfx-selected-color: black;" text="اختيار الفترة" toggleGroup="$ReportsDate">
+                                                <JFXRadioButton fx:id="Rad_Choose_Period" nodeOrientation="LEFT_TO_RIGHT" style="-jfx-selected-color: black;" text="اختيار الفترة" toggleGroup="$ReportsDate">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
