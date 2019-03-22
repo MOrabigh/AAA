@@ -1331,9 +1331,13 @@
                      <children>
                         <HBox alignment="TOP_RIGHT" layoutY="56.0" prefHeight="572.0" prefWidth="1121.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
                            <children>
+                              <ListView fx:id="listv" nodeOrientation="LEFT_TO_RIGHT" onKeyReleased="#Test_presed" onMouseClicked="#Test_GetMM" prefHeight="645.0" prefWidth="362.0">
+                                 <HBox.margin>
+                                    <Insets left="10.0" top="10.0" />
+                                 </HBox.margin></ListView>
                               <VBox prefHeight="512.0" prefWidth="857.0">
                                  <children>
-                                    <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                                    <HBox fx:id="Hbox_Date_Reports" alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" visible="false">
                                        <children>
                                           <Label layoutX="571.0" layoutY="65.0" text="From:">
                                              <HBox.margin>
@@ -1389,7 +1393,7 @@
                                           </VBox>
                                        </children>
                                     </HBox>
-                                    <HBox alignment="CENTER" prefHeight="148.0" prefWidth="857.0">
+                                    <HBox fx:id="Hbox_Emolyee_Reports" alignment="CENTER" prefHeight="90.0" prefWidth="857.0" visible="false">
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
@@ -1401,7 +1405,7 @@
                                           <ComboBox fx:id="Selct_Name_Employee" prefWidth="150.0" />
                                        </children>
                                     </HBox>
-                                    <HBox alignment="CENTER" prefHeight="126.0" prefWidth="857.0">
+                                    <HBox fx:id="Hbox_MO_Reports" alignment="CENTER" prefHeight="57.0" prefWidth="857.0" visible="false">
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
@@ -1409,7 +1413,7 @@
                                           <Insets />
                                        </VBox.margin>
                                        <children>
-                                          <Label prefHeight="21.0" prefWidth="179.0" text="Maintenance Number">
+                                          <Label prefHeight="21.0" prefWidth="179.0" text="MO Number">
                                              <padding>
                                                 <Insets right="30.0" />
                                              </padding>
@@ -1427,7 +1431,7 @@
                                           </JFXTextField>
                                        </children>
                                     </HBox>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <HBox fx:id="Hbox_Customer_Reports" prefHeight="192.0" prefWidth="857.0" visible="false">
                                        <children>
                                           <Label prefHeight="21.0" prefWidth="204.0" text="Customer Mobile Number">
                                              <HBox.margin>
@@ -1468,10 +1472,6 @@
                                     <Insets />
                                  </HBox.margin>
                               </VBox>
-                              <ListView fx:id="listv" nodeOrientation="RIGHT_TO_LEFT" onKeyReleased="#Test_presed" onMouseClicked="#Test_GetMM" prefHeight="513.0" prefWidth="196.0">
-                                 <HBox.margin>
-                                    <Insets right="10.0" top="10.0" />
-                                 </HBox.margin></ListView>
                            </children>
                         </HBox>
                         <Separator layoutY="1.0" prefHeight="15.0" prefWidth="1126.0" stylesheets="/css/hr.css">
@@ -1524,7 +1524,7 @@
                      <children>
                         <VBox alignment="TOP_CENTER" layoutX="320.0" layoutY="52.0" prefHeight="562.0" prefWidth="501.0">
                            <children>
-                              <JFXButton prefHeight="94.0" prefWidth="428.0" stylesheets="/css/hr.css" text="      Save database ">
+                              <JFXButton fx:id="Btn_SaveDB_Tools" prefHeight="94.0" prefWidth="428.0" stylesheets="/css/hr.css" text="      Save database ">
                                  <graphic>
                                     <ImageView fitHeight="75.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1539,7 +1539,7 @@
                                     <Insets top="30.0" />
                                  </VBox.margin>
                               </JFXButton>
-                              <JFXButton prefHeight="94.0" prefWidth="428.0" stylesheets="/css/hr.css" text="   Archive database ">
+                              <JFXButton fx:id="Btn_ArchiveDB_Tools" prefHeight="94.0" prefWidth="428.0" stylesheets="/css/hr.css" text="   Archive database ">
                                  <graphic>
                                     <ImageView fitHeight="75.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1554,7 +1554,7 @@
                                     <Insets top="30.0" />
                                  </VBox.margin>
                               </JFXButton>
-                              <JFXButton prefHeight="94.0" prefWidth="428.0" stylesheets="/css/hr.css" text="  Change password ">
+                              <JFXButton onAction="#M_Btn_ChangePassword_Tools" prefHeight="94.0" prefWidth="428.0" stylesheets="/css/hr.css" text="  Change password ">
                                  <graphic>
                                     <ImageView fitHeight="75.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1627,7 +1627,7 @@
                <children>
                   <ImageView fitHeight="71.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icons/whhh.png" />
+                        <Image url="@../../../GP_AZZZ/src/icons/whhh.png" />
                      </image>
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -1635,13 +1635,37 @@
                   </ImageView>
                </children>
             </VBox>
+            <VBox alignment="CENTER_RIGHT" prefHeight="81.0" prefWidth="41.0">
+               <children>
+                  <Label contentDisplay="RIGHT" prefHeight="17.0" prefWidth="78.0" text="User">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <Label contentDisplay="RIGHT" prefHeight="17.0" prefWidth="77.0" text="Job">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox alignment="CENTER_RIGHT" prefHeight="81.0" prefWidth="136.0">
+               <children>
+                  <Label fx:id="Label_UserID_Name" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="156.0" />
+                  <Label fx:id="Label_UserJob" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="155.0">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
             <Label fx:id="MainLable" alignment="TOP_CENTER" prefHeight="81.0" prefWidth="808.0">
                <font>
                   <Font size="44.0" />
                </font>
-               <HBox.margin>
-                  <Insets left="150.0" />
-               </HBox.margin>
             </Label>
          </children>
       </HBox>

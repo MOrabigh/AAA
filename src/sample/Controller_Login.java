@@ -136,7 +136,7 @@ public class Controller_Login {
                     stage2.close();
 
                     FXMLLoader loader = new FXMLLoader();
-                    System.out.println("JOOOB"+rs3.getString("JOP_TYPE"));
+                    System.out.println("JOOOB" + rs3.getString("JOP_TYPE"));
                     //Controller controller = loader.getController();
                     if (count_Language == 0) {
                         loader.setLocation(getClass().getResource("/sample/sample_EN.fxml"));
@@ -169,8 +169,11 @@ public class Controller_Login {
                     }
 
                     Controller controller = loader.getController();
+
+                    controller.Em_Id = Integer.parseInt(Txfiled_UserID_Login.getText());
+                    controller.SetUserinformation(rs3.getString("EMP_NAME"), rs3.getString("JOP_TYPE"));
                     //edit here 
-                    if (rs3.getString("JOP_TYPE").equalsIgnoreCase("Administrator")||rs3.getString("JOP_TYPE").equalsIgnoreCase("اداري")) {
+                    if (rs3.getString("JOP_TYPE").equalsIgnoreCase("Administrator") || rs3.getString("JOP_TYPE").equalsIgnoreCase("اداري")) {
                         if (count_Language == 0) {
                             controller.SP_Alert_Admin_EN();
 
@@ -179,21 +182,25 @@ public class Controller_Login {
                         }
 
                         //controller.FatharTap.getTabs().remove(controller.Tab_CustomerMangment);
-                    } else if (rs3.getString("JOP_TYPE").equalsIgnoreCase("ReceptionDesk")||rs3.getString("JOP_TYPE").equalsIgnoreCase("استقبال")) {
+                    } else if (rs3.getString("JOP_TYPE").equalsIgnoreCase("ReceptionDesk") || rs3.getString("JOP_TYPE").equalsIgnoreCase("استقبال")) {
                         controller.FatharTap.getTabs().remove(controller.Tab_ReqSP);
                         controller.FatharTap.getTabs().remove(controller.Tab_EmployeeMangment);
                         controller.FatharTap.getTabs().remove(controller.Tab_Reports);
-                        //controller.FatharTap.getTabs().remove(controller.Tab_Tools);
+                        controller.Btn_ArchiveDB_Tools.setVisible(false);
+                        controller.Btn_SaveDB_Tools.setVisible(false);
 
-                    } else if (rs3.getString("JOP_TYPE").equalsIgnoreCase("Technician")||rs3.getString("JOP_TYPE").equalsIgnoreCase("فني")) {
+                        //controller.FatharTap.getTabs().remove(controller.Tab_Tools);
+                    } else if (rs3.getString("JOP_TYPE").equalsIgnoreCase("Technician") || rs3.getString("JOP_TYPE").equalsIgnoreCase("فني")) {
                         controller.FatharTap.getTabs().remove(controller.Tab_CustomerMangment);
                         controller.FatharTap.getTabs().remove(controller.Tab_SPMangment);
                         controller.FatharTap.getTabs().remove(controller.Tab_ReqSP);
                         controller.FatharTap.getTabs().remove(controller.Tab_SupliersMangment);
                         controller.FatharTap.getTabs().remove(controller.Tab_EmployeeMangment);
                         controller.FatharTap.getTabs().remove(controller.Tab_Reports);
-                        //controller.FatharTap.getTabs().remove(controller.Tab_Tools);
+                        controller.Btn_ArchiveDB_Tools.setVisible(false);
+                        controller.Btn_SaveDB_Tools.setVisible(false);
 
+                        //controller.FatharTap.getTabs().remove(controller.Tab_Tools);
                     }
 
                     Parent parent = loader.getRoot();
@@ -208,14 +215,15 @@ public class Controller_Login {
                     alert2.setContentText("يوجد خطا في بيانات المستخدم");
                     alert2.showAndWait();
                 }
-            }else {
-                    //JOptionPane.showMessageDialog(null,"Hello, Welcome to Javatpoint.");  
-                    // JOptionPane.showMessageDialog(null, "Successfully Updated.", "Alert", JOptionPane.WARNING_MESSAGE);
-                    //JOptionPane.showMessageDialog(null, "Wrong !!! .", "Alert", JOptionPane.ERROR_MESSAGE);
-                    alert2.setContentText("يوجد خطا في بيانات المستخدم");
-                    alert2.showAndWait();
+            } else {
+                //JOptionPane.showMessageDialog(null,"Hello, Welcome to Javatpoint.");  
+                // JOptionPane.showMessageDialog(null, "Successfully Updated.", "Alert", JOptionPane.WARNING_MESSAGE);
+                //JOptionPane.showMessageDialog(null, "Wrong !!! .", "Alert", JOptionPane.ERROR_MESSAGE);
+                alert2.setContentText("يوجد خطا في بيانات المستخدم");
+                alert2.showAndWait();
+            }
         }
-    }}
+    }
 
     @FXML
     private void M_Btn_Cancle_Login(ActionEvent event) {
