@@ -51,6 +51,8 @@ import javafx.util.converter.DoubleStringConverter;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.mail.internet.MimeMessage;
@@ -344,7 +346,7 @@ public class Controller_AddMO implements Initializable {
 
     }
 
-    public void Search(String Search, int Choose) {
+    public void Search(String Search, int Choose)  {
         if (Choose == 2) {
             ResultSet rs = connectionClass.execQuery(Search);
             try {
@@ -372,21 +374,26 @@ public class Controller_AddMO implements Initializable {
         } else if (Choose == 1) {
 
             ResultSet rs = connectionClass.execQuery(Search);
+          
             try {
-                while (rs.next()) {
-
+                if(rs.first()){
+                    
                     Txfiled_CusName_AddMO.setText(rs.getString("CUS_NAME"));
 
+                }else {
+                 Txfiled_CusName_AddMO.setText("");
                 }
-
             } catch (SQLException ex) {
-                ex.printStackTrace();
-
+                Logger.getLogger(Controller_AddMO.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
 
-    }
+            }
+
+        
+
+    
 
     @FXML
     private void M_Btn_AddSP_AddMo(ActionEvent event) throws SQLException {
@@ -1190,13 +1197,9 @@ public class Controller_AddMO implements Initializable {
 
     }
 
-    @FXML
-    private void M_Txfiled_SPCost_AddMO(ActionEvent event) {
 
-        calculate();
-    }
 
-    String id3 = "";
+
     public int Choose = 0;
 
     @FXML
@@ -1205,23 +1208,16 @@ public class Controller_AddMO implements Initializable {
         System.out.println(event.getEventType().toString());
         System.out.println(event.getText());
 
-        id3 += event.getText();
-        if (event.getText().equals("")) {
-            id3 = id3.substring(0, id3.length() - 1);
 
-        }
 
-        System.out.println("__________  " + id3);
 
-        String sql1 = "SELECT * FROM `customer` WHERE `CUS_MOBILE_NBER` = '" + id3 + "'";
-        String trysql = "SELECT * FROM `customer` WHERE `CUS_MOBILE_NBER` LIKE '" + id3 + "%';";
+        String sql1 = "SELECT * FROM `customer` WHERE `CUS_MOBILE_NBER` = '" + Txfiled_CusMnum_AddMO.getText() + "'";
+        String trysql = "SELECT * FROM `customer` WHERE `CUS_MOBILE_NBER` LIKE '" + Txfiled_CusMnum_AddMO.getText() + "%';";
         System.out.println(sql1);
         Search(sql1, Choose);
 
     }
 
-    String id2 = "";
-    String var1 = "", var2 = "";
 
     @FXML
     private void M_Txfiled_SearchSP_AddMO(KeyEvent event) {
@@ -1267,6 +1263,11 @@ public class Controller_AddMO implements Initializable {
             Search(trysql, Choose);
 
         }
+    }
+
+    @FXML
+    private void M_Txfiled_SPCost_AddMO(KeyEvent event) {
+        calculate();
     }
 
     public static class AddSP {

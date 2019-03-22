@@ -25,12 +25,12 @@
          <children>
             <VBox layoutX="-1.0" layoutY="323.0" prefHeight="303.0" prefWidth="300.0">
                <children>
-                  <JFXTextField fx:id="Txfiled_SPCost_AddMO" alignment="CENTER" labelFloat="true" onAction="#M_Txfiled_SPCost_AddMO" promptText="تكلفة قطع الغيار" text="0.00">
+                  <JFXTextField fx:id="Txfiled_SPCost_AddMO" alignment="CENTER" disable="true" labelFloat="true" onAction="#M_Txfiled_SPCost_AddMO" promptText="تكلفة قطع الغيار" text="0.00">
                      <VBox.margin>
                         <Insets left="15.0" right="15.0" top="30.0" />
                      </VBox.margin>
                   </JFXTextField>
-                  <JFXTextField fx:id="Txfiled_MOCost_AddMO" alignment="CENTER" labelFloat="true" onAction="#M_Txfiled_SPCost_AddMO" promptText="تكلفة الصيانة" text="0.00">
+                  <JFXTextField fx:id="Txfiled_MOCost_AddMO" alignment="CENTER" labelFloat="true" onKeyReleased="#M_Txfiled_SPCost_AddMO" promptText="تكلفة الصيانة" text="0.00">
                      <VBox.margin>
                         <Insets left="15.0" right="15.0" top="30.0" />
                      </VBox.margin>
@@ -61,13 +61,13 @@
                   </JFXTextArea>
                   <HBox alignment="CENTER" prefHeight="55.0" prefWidth="300.0">
                      <children>
-                        <ComboBox fx:id="Selct_Techichan_AddMO" prefWidth="150.0">
+                        <ComboBox fx:id="Selct_Techichan_AddMO" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="204.0">
                             
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                            <HBox.margin>
-                              <Insets left="20.0" right="20.0" />
+                              <Insets left="20.0" />
                            </HBox.margin>
                         </ComboBox>
                         <Label text="فني الصيانة :">
@@ -75,7 +75,7 @@
                               <Insets />
                            </opaqueInsets>
                            <HBox.margin>
-                              <Insets left="20.0" right="20.0" />
+                              <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
                      </children>
@@ -85,14 +85,14 @@
                   </HBox>
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="344.0" prefHeight="55.0" prefWidth="300.0">
                      <children>
-                        <ComboBox fx:id="Selct_MoStatus_AddMO" prefWidth="150.0">
+                        <ComboBox fx:id="Selct_MoStatus_AddMO" nodeOrientation="RIGHT_TO_LEFT" prefWidth="204.0">
                          
                            <opaqueInsets>
                                
                               <Insets />
                            </opaqueInsets>
                            <HBox.margin>
-                              <Insets left="20.0" right="20.0" />
+                              <Insets left="20.0" />
                            </HBox.margin>
                             
                         </ComboBox>
@@ -101,7 +101,7 @@
                               <Insets />
                            </opaqueInsets>
                            <HBox.margin>
-                              <Insets left="20.0" right="20.0" />
+                              <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
                      </children>
@@ -202,7 +202,7 @@
                                     </VBox>
                                     <VBox alignment="CENTER" layoutX="714.0" layoutY="14.0" prefHeight="212.0" prefWidth="113.0">
                                        <children>
-                                          <JFXTextField fx:id="Txfiled_SearchSP_AddMO" alignment="CENTER" onKeyPressed="#M_Txfiled_SearchSP_AddMO" promptText="بحث">
+                                          <JFXTextField fx:id="Txfiled_SearchSP_AddMO" alignment="CENTER" onKeyReleased="#M_Txfiled_SearchSP_AddMO" promptText="بحث">
                                              <VBox.margin>
                                                 <Insets bottom="10.0" top="5.0" />
                                              </VBox.margin>
@@ -239,7 +239,7 @@
                         <Insets left="15.0" right="15.0" top="20.0" />
                      </VBox.margin>
                   </JFXTextField>
-                  <JFXTextField fx:id="Txfiled_CusMnum_AddMO" alignment="CENTER" labelFloat="true" onKeyPressed="#M_Txfiled_CusMnum_AddMO" promptText="هاتف العميل">
+                  <JFXTextField fx:id="Txfiled_CusMnum_AddMO" alignment="CENTER" labelFloat="true" onKeyReleased="#M_Txfiled_CusMnum_AddMO" promptText="هاتف العميل">
                      <VBox.margin>
                         <Insets left="15.0" right="15.0" top="30.0" />
                      </VBox.margin>

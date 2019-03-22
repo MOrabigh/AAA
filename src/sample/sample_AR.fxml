@@ -382,7 +382,7 @@
                                                             <Insets right="30.0" />
                                                          </HBox.margin>
                                                       </JFXButton>
-                                                      <JFXTextField fx:id="Txfiled_Search_MangeCurrentMO" alignment="CENTER" onKeyPressed="#M_Txfiled_Search_MangeCurrentMO" promptText="بحث برقم العملية">
+                                                      <JFXTextField fx:id="Txfiled_Search_MangeCurrentMO" alignment="CENTER" onKeyReleased="#M_Txfiled_Search_MangeCurrentMO" promptText="بحث برقم العملية">
                                                          <HBox.margin>
                                                             <Insets left="30.0" />
                                                          </HBox.margin>
@@ -431,7 +431,7 @@
                                                       <Insets right="30.0" />
                                                    </HBox.margin>
                                                 </JFXButton>
-                                                <JFXTextField alignment="CENTER" onKeyPressed="#Txfiled_Search_MangeFinshedMO" prefHeight="25.0" prefWidth="221.0" promptText="بحث برقم العملية">
+                                                <JFXTextField fx:id="Txfiled_Search_MangeFinshedMO" alignment="CENTER" onKeyReleased="#Txfiled_Search_MangeFinshedMO" prefHeight="25.0" prefWidth="221.0" promptText="بحث برقم العملية">
                                                    <HBox.margin>
                                                       <Insets left="30.0" />
                                                    </HBox.margin>
@@ -480,7 +480,7 @@
                                                             <Insets right="30.0" />
                                                          </HBox.margin>
                                                       </JFXButton>
-                                                      <JFXTextField alignment="CENTER" onKeyPressed="#Txfiled_Search_MangePreviousMO" promptText="بحث برقم العملية">
+                                                      <JFXTextField fx:id="Txfiled_Search_MangePreviousMO" alignment="CENTER" onKeyReleased="#Txfiled_Search_MangePreviousMO" promptText="بحث برقم العملية">
                                                          <HBox.margin>
                                                             <Insets left="30.0" />
                                                          </HBox.margin>
@@ -531,7 +531,7 @@
                                                             <Insets right="30.0" />
                                                          </HBox.margin>
                                                       </JFXButton>
-                                                      <JFXTextField alignment="CENTER" onKeyPressed="#Txfiled_Search_MangePendingMO" promptText="بحث برقم العملية">
+                                                      <JFXTextField fx:id="Txfiled_Search_MangePendingMO" alignment="CENTER" onKeyReleased="#Txfiled_Search_MangePendingMO" promptText="بحث برقم العملية">
                                                          <HBox.margin>
                                                             <Insets left="30.0" />
                                                          </HBox.margin>

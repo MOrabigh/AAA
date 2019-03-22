@@ -376,6 +376,12 @@ public class Controller implements Initializable {
     public JFXButton Btn_SaveDB_Tools;
     @FXML
     public JFXButton Btn_ArchiveDB_Tools;
+    @FXML
+    private JFXTextField Txfiled_Search_MangeFinshedMO;
+    @FXML
+    private JFXTextField Txfiled_Search_MangePreviousMO;
+    @FXML
+    private JFXTextField Txfiled_Search_MangePendingMO;
 
     //int count = 0;
     @Override
@@ -2510,7 +2516,6 @@ i=1000;
 
         }
     }
-    String id3 = "";
 
     @FXML
     private void M_Txfiled_Search_MangeCurrentMO(KeyEvent event) throws SQLException {
@@ -2520,22 +2525,13 @@ i=1000;
         System.out.println("GEEEEEEET TEXT   " + Txfiled_Search_MangeCurrentMO.getText());
         System.out.println("yyyyyyyyyyy TEXT   " + Txfiled_Search_MangeCurrentMO.getSelectedText());
 
-        id3 += event.getText();
-        if (event.getText().equals("")) {
-            id3 = id3.substring(0, id3.length() - 1);
-            if (Txfiled_Search_MangeCurrentMO.getText().isEmpty() == true) {
-                // Txfiled_Search_MangeCurrentMO.selectAll();
-                //Txfiled_Search_MangeCurrentMO.getSelectedText().length();
-                System.out.println("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
 
-            }
-        }
 
-        System.out.println("__________  " + id3);
+      
 
-        String sql1 = "SELECT * FROM `maintenance_operation` WHERE `MO_NBER` = '" + id3 + "'";
+        String sql1 = "SELECT * FROM `maintenance_operation` WHERE `MO_NBER` = '" + Txfiled_Search_MangeCurrentMO.getText() + "'";
         String trysql = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID "
-                + "WHERE `MO_NBER` LIKE '" + id3 + "%' AND STATE ='approved' OR `MO_NBER` LIKE '" + id3 + "%' AND  STATE ='under maintenance'; ";
+                + "WHERE `MO_NBER` LIKE '" + Txfiled_Search_MangeCurrentMO.getText() + "%' AND STATE IN ('approved' ,'under maintenance','تم الموافقة' ,'تحت الصيانة'); ";
         // + "OR `CUS_NAME` LIKE '" + id3 + "%' AND STATE ='approved' OR STATE ='under maintenance';";
         System.out.println(trysql);
         Search(trysql, Choose);
@@ -2548,17 +2544,11 @@ i=1000;
         System.out.println(event.getEventType().toString());
         System.out.println(event.getText());
 
-        id3 += event.getText();
-        if (event.getText().equals("")) {
-            id3 = id3.substring(0, id3.length() - 1);
 
-        }
 
-        System.out.println("__________  " + id3);
-
-        String sql1 = "SELECT * FROM `maintenance_operation` WHERE `MO_NBER` = '" + id3 + "'";
+        String sql1 = "SELECT * FROM `maintenance_operation` WHERE `MO_NBER` = '" + Txfiled_Search_MangeFinshedMO.getText() + "'";
         String trysql = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID "
-                + "WHERE `MO_NBER` LIKE '" + id3 + "%' AND STATE ='repaired'; ";
+                + "WHERE `MO_NBER` LIKE '" + Txfiled_Search_MangeFinshedMO.getText() + "%' AND STATE IN ('repaired','تم الاصلاح'); ";
         //  + "OR `CUS_NAME` LIKE '" + id3 + "%' AND STATE ='repaired' ;";
         System.out.println(trysql);
         Search(trysql, Choose);
@@ -2570,17 +2560,12 @@ i=1000;
         System.out.println(event.getEventType().toString());
         System.out.println(event.getText());
 
-        id3 += event.getText();
-        if (event.getText().equals("")) {
-            id3 = id3.substring(0, id3.length() - 1);
 
-        }
 
-        System.out.println("__________  " + id3);
 
-        String sql1 = "SELECT * FROM `maintenance_operation` WHERE `MO_NBER` = '" + id3 + "'";
+        String sql1 = "SELECT * FROM `maintenance_operation` WHERE `MO_NBER` = '" + Txfiled_Search_MangePreviousMO.getText() + "'";
         String trysql = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID "
-                + "WHERE `MO_NBER` LIKE '" + id3 + "%' AND STATE ='paid' OR `MO_NBER` LIKE '" + id3 + "%' AND  STATE ='disapproved'; ";
+                + "WHERE `MO_NBER` LIKE '" + Txfiled_Search_MangePreviousMO.getText() + "%' AND STATE IN ('paid' ,'disapproved','دفعت' ,'مرفوضة'); ";
         // + "OR `CUS_NAME` LIKE '" + id3 + "%' AND STATE ='paid' OR STATE ='disapproved';";
         System.out.println(trysql);
         Search(trysql, Choose);
@@ -2592,17 +2577,12 @@ i=1000;
         System.out.println(event.getEventType().toString());
         System.out.println(event.getText());
 
-        id3 += event.getText();
-        if (event.getText().equals("")) {
-            id3 = id3.substring(0, id3.length() - 1);
 
-        }
 
-        System.out.println("__________  " + id3);
-
-        String sql1 = "SELECT * FROM `maintenance_operation` WHERE `MO_NBER` = '" + id3 + "'";
+        String sql1 = "SELECT * FROM `maintenance_operation` WHERE `MO_NBER` = '" + Txfiled_Search_MangePendingMO.getText() + "'";
         String trysql = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID "
-                + "WHERE `MO_NBER` LIKE '" + id3 + "%' AND STATE ='other defects has been detected' OR `MO_NBER` LIKE '" + id3 + "%' AND  STATE ='cannot be done' OR `MO_NBER` LIKE '" + id3 + "%' AND  STATE ='created'; ";
+                + "WHERE `MO_NBER` LIKE '" + Txfiled_Search_MangePendingMO.getText() + "%' AND STATE IN( 'other defects has been detected' ,'cannot be done' ,'created'"
+                + ",'تم الكشف عن عيوب أخرى' ,'لا يمكن القيام بعملية الصيانة' ,'تم الإنشاء'); ";
         //+ "OR `CUS_NAME` LIKE '" + id3 + "%' AND STATE ='other defects has been detected' OR STATE ='cannot be done' OR STATE ='created';";
         System.out.println(trysql);
         Search(trysql, Choose);
