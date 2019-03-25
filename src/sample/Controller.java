@@ -60,6 +60,7 @@ public class Controller implements Initializable {
     ConnectionClass connectionClass = new ConnectionClass();
     // we call conneClass  that we make it up
     Connection connection = connectionClass.getConnection();
+    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
 
     int count = 0;
 
@@ -797,6 +798,11 @@ i=1000;
 
     @FXML
     private void M_Btn_ChangeMN_Customer(ActionEvent event) {
+         count = 3;
+        Txfiled_MNum_Customer.setDisable(false);
+        Txfiled_Name_Customer.setDisable(true);
+        Txfiled_Email_Customer.setDisable(true);
+        Txfiled_Address_Customer.setDisable(true);
     }
 
     @FXML
@@ -910,41 +916,53 @@ i=1000;
 
     @FXML
     private void M_Btn_Delete_Customer(ActionEvent event) throws SQLException {
+         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("");
+        alert.setHeaderText("");
+        if (count_Language == 0) {
+            alert.setContentText("This Cstomer will be deleted ");
+        } else {
+            alert.setContentText("  سوف يتم حذف هذا العميل ");
 
-        String sql1 = "DELETE FROM  `customer`  WHERE CUS_MOBILE_NBER= " + Txfiled_MNum_Customer.getText();
-        System.out.println(sql1);
-        java.sql.Statement statement1 = connection.createStatement();
+        }
 
-        clear();
-        try {
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            // ... user chose OK
+            String deletSP = "DELETE FROM  `maintenance_operation` " + " WHERE CUS_MOBILE_NBER= " + Txfiled_MNum_Customer.getText();
+            String sql1 = "DELETE FROM  `customer` " + " WHERE CUS_MOBILE_NBER= " +  Txfiled_MNum_Customer.getText();
+            System.out.println(deletSP);
+            System.out.println(sql1);
+            java.sql.Statement statement1 = connection.createStatement();
+            statement1.executeUpdate(deletSP);
             statement1.executeUpdate(sql1);
-
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setContentText("Deleted Successfully");
-                alert.showAndWait();
-
-            }
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText(" Cannot delete or update a parent row: a foreign key constraint fails (`mo_db`.`maintenance_operation`, CONSTRAINT `maintenance_operation_ibfk_2` FOREIGN KEY (`CUS_MOBILE_NBER`) REFERENCES `customer` (`CUS_MOBILE_NBER`) ON DELETE NO ACTION)");
-            alert.showAndWait();
-            return;
+            clear();
         }
 
     }
+    
+
+      
+        
+   
+    
 
     @FXML
     private void M_Btn_Save_Customer(ActionEvent event) throws SQLException {
+        alert2.setTitle(null);
+        alert2.setHeaderText(null);
         if (Txfiled_MNum_Customer.getText().isEmpty() || Txfiled_Name_Customer.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Pleas enter the value");
+
+            if (count_Language == 0) {
+                alert.setContentText("Please enter the value");
+            } else {
+                alert.setContentText("الرجاء إدخال القيمة");
+
+            }
             alert.showAndWait();
             return;
-
         }
 
         if (count == 1) {
@@ -955,6 +973,15 @@ i=1000;
             java.sql.Statement statement1 = connection.createStatement();
 
             statement1.executeUpdate(sqll);
+             if (count_Language == 0) {
+
+                alert2.setContentText(" A new Customer has been created");
+            } else {
+                alert2.setContentText("تم انشاء عميل جديد");
+
+            }
+
+            alert2.showAndWait();
 
         } else if (count == 2) {
             System.out.println("Equal  update");
@@ -966,10 +993,19 @@ i=1000;
             statement1.executeUpdate(sql1);
         } else if (count == 3) {
             System.out.println("Equal  update mobile number");
-            String sqll = "UPDATE customer SET CUS_MOBILE_NBER='" + Txfiled_MNum_Customer.getText() + "' WHERE CUS_NAME= '" + Txfiled_Name_Customer.getText() + "'";
+            String sqll = "UPDATE customer SET CUS_MOBILE_NBER='" + Txfiled_MNum_Customer.getText() + "' WHERE CUS_NAME= '" + Txfiled_Name_Customer.getText()+ "'";
             System.out.println(sqll);
             java.sql.Statement statement1 = connection.createStatement();
             statement1.executeUpdate(sqll);
+            if (count_Language == 0) {
+
+                alert2.setContentText("Mobile Number has been changed");
+            } else {
+                alert2.setContentText("تم تغيير رقم الهاتف");
+
+            }
+
+            alert2.showAndWait();
 
         }
         //count = 2;
@@ -1007,8 +1043,7 @@ i=1000;
         } else {
             System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
             count = 1;
-            Txfiled_MNum_Customer.setDisable(true);
-            Txfiled_MNum_Customer.clear();
+            
             Btn_Cancle_Customer.setDisable(false);
             Btn_Save_Customer.setDisable(false);
             Btn_Delete_Customer.setDisable(false);
@@ -1034,11 +1069,28 @@ i=1000;
 
     @FXML
     void M_Btn_Delete_Employee(ActionEvent event) throws SQLException {
-        String sql1 = "DELETE FROM  `employee`  WHERE EMPLOYEE_ID= " + Txfiled_Num_Employee.getText();
-        System.out.println(sql1);
-        java.sql.Statement statement1 = connection.createStatement();
+       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("");
+        alert.setHeaderText("");
+        if (count_Language == 0) {
+            alert.setContentText("This Employee will be deleted ");
+        } else {
+            alert.setContentText("  سوف يتم حذف هذا الموظف ");
 
+        }
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            // ... user chose OK
+            String deletSP = "DELETE FROM  `maintenance_operation` " + " WHERE EMPLOYEE_ID= " + Txfiled_Num_Employee.getText();
+            String sql1 = "DELETE FROM  `employee` " + " WHERE EMPLOYEE_ID= " + Txfiled_Num_Employee.getText();
+            System.out.println(deletSP);
+            System.out.println(sql1);
+            java.sql.Statement statement1 = connection.createStatement();
+            statement1.executeUpdate(deletSP);
+            statement1.executeUpdate(sql1);
         Txfiled_Num_Employee.setDisable(false);
+        Txfiled_Num_Employee.clear();
         Txfiled_Name_Employee.clear();
         Txfiled_Email_Employee.clear();
         Txfiled_Address_Employee.clear();
@@ -1046,36 +1098,30 @@ i=1000;
         Selct_JType_Employee.getSelectionModel().clearSelection();
         Selct_Sex_Employee.getSelectionModel().clearSelection();
         Txfiled_Password_Employee.clear();
-        try {
-            statement1.executeUpdate(sql1);
-
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setContentText("Deleted Successfully");
-                alert.showAndWait();
-                //return;
-            }
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText(" Cannot delete or update a parent row: a foreign key constraint fails (`mo_db`.`maintenance_operation`, CONSTRAINT `maintenance_operation_ibfk_1` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `employee` (`EMPLOYEE_ID`) ON DELETE NO ACTION)");
-            alert.showAndWait();
-            //return;
+            
         }
 
     }
+    
 
     @FXML
     private void M_Btn_Save_Employee(ActionEvent event) throws SQLException {
-
+            alert2.setTitle(null);
+        alert2.setHeaderText(null);
         if (Txfiled_Num_Employee.getText().isEmpty() || Txfiled_Name_Employee.getText().isEmpty() || Txfiled_Email_Employee.getText().isEmpty()
                 || Txfiled_Address_Employee.getText().isEmpty() || Txfiled_MNum_Employee.getText().isEmpty() || Selct_JType_Employee.getValue().isEmpty() || Selct_Sex_Employee.getValue().isEmpty() || Txfiled_Password_Employee.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Pleas enter the value");
+
+            if (count_Language == 0) {
+                alert.setContentText("Please enter the value");
+            } else {
+                alert.setContentText("الرجاء إدخال القيمة");
+
+            }
             alert.showAndWait();
             return;
+
 
         }
 
@@ -1088,6 +1134,15 @@ i=1000;
             java.sql.Statement statement1 = connection.createStatement();
 
             statement1.executeUpdate(sqll);
+               if (count_Language == 0) {
+
+                alert2.setContentText(" A new Employee has been created");
+            } else {
+                alert2.setContentText("تم انشاء موظف جديد");
+
+            }
+
+            alert2.showAndWait();
 
         } else if (count == 2) {
             System.out.println("Equal  update");
@@ -1228,10 +1283,29 @@ i=1000;
 
     @FXML
     private void M_Btn_Delete_SP(ActionEvent event) throws SQLException {
-        String sql1 = "DELETE FROM  `spare_parts`  WHERE SP_NBER= " + Txfiled_SPNum_SP.getText();
-        System.out.println(sql1);
-        java.sql.Statement statement1 = connection.createStatement();
+         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("");
+        alert.setHeaderText("");
+        if (count_Language == 0) {
+            alert.setContentText("This Spare part will be deleted ");
+        } else {
+            alert.setContentText("  سوف يتم حذف قطعة الغيار ");
 
+        }
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            // ... user chose OK
+            String deleteSP = "DELETE FROM  `require` " + " WHERE SP_NBER= " + Txfiled_SPNum_SP.getText();
+            String deletSP = "DELETE FROM  `attach` " + " WHERE SP_NBER= " + Txfiled_SPNum_SP.getText();
+            String sql1 = "DELETE FROM  `spare_parts`" + " WHERE SP_NBER= " + Txfiled_SPNum_SP.getText();
+            System.out.println(deleteSP);
+            System.out.println(deletSP);
+            System.out.println(sql1);
+            java.sql.Statement statement1 = connection.createStatement();
+             statement1.executeUpdate(deleteSP);
+            statement1.executeUpdate(deletSP);
+            statement1.executeUpdate(sql1);
         Txfiled_SPNum_SP.setDisable(false);
         Txfiled_Name_SP.clear();
         Txfiled_Price_SP.clear();
@@ -1239,33 +1313,23 @@ i=1000;
         Txfiled_Discription_SP.clear();
         Txfiled_minimumQuantity_SP.clear();
 
-        try {
-            statement1.executeUpdate(sql1);
-
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setContentText("Deleted Successfully");
-                alert.showAndWait();
-                //return;
-            }
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("Cannot delete or update a parent row: a foreign key constraint fails (`mo_db`.`require`, CONSTRAINT `require_ibfk_2` FOREIGN KEY (`SP_NBER`) REFERENCES `spare_parts` (`SP_NBER`)) or Cannot delete or update a parent row: a foreign key constraint fails (`mo_db`.`attach`, CONSTRAINT `attach_ibfk_1` FOREIGN KEY (`SP_NBER`) REFERENCES `spare_parts` (`SP_NBER`))");
-            alert.showAndWait();
-            //return;
-        }
-
-    }
+    }}
 
     @FXML
     private void M_Btn_Save_SP(ActionEvent event) throws SQLException {
+         alert2.setTitle(null);
+        alert2.setHeaderText(null);
         if (Txfiled_SPNum_SP.getText().isEmpty() || Txfiled_Name_SP.getText().isEmpty() || Txfiled_Price_SP.getText().isEmpty()
                 || Txfiled_Quantity_SP.getText().isEmpty() || Txfiled_Discription_SP.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Pleas enter the value");
+
+            if (count_Language == 0) {
+                alert.setContentText("Please enter the value");
+            } else {
+                alert.setContentText("الرجاء إدخال القيمة");
+
+            }
             alert.showAndWait();
             return;
 
@@ -1282,6 +1346,15 @@ i=1000;
             //statement1.executeUpdate(A);
 
             statement1.executeUpdate(sqll);
+            if (count_Language == 0) {
+
+                alert2.setContentText(" A new Spare part has been created");
+            } else {
+                alert2.setContentText("تم انشاء قطعة غيار جديدة");
+
+            }
+
+            alert2.showAndWait();
 
         } else if (count == 2) {
             System.out.println("Equal  update");
@@ -1299,13 +1372,22 @@ i=1000;
 
     @FXML
     private void M_Btn_Save_Supplier(ActionEvent event) throws SQLException {
+         alert2.setTitle(null);
+        alert2.setHeaderText(null);
         if (Txfiled_Num_Supplier.getText().isEmpty() || Txfiled_MNum_Supplier.getText().isEmpty() || Txfiled_Email_Supplier.getText().isEmpty()
                 || Txfiled_Name_Supplier.getText().isEmpty() || Txfiled_Address_Supplier.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+           Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Pleas enter the value");
+
+            if (count_Language == 0) {
+                alert.setContentText("Please enter the value");
+            } else {
+                alert.setContentText("الرجاء إدخال القيمة");
+
+            }
             alert.showAndWait();
             return;
+
 
         }
 
@@ -1317,6 +1399,15 @@ i=1000;
             java.sql.Statement statement1 = connection.createStatement();
 
             statement1.executeUpdate(sqll);
+            if (count_Language == 0) {
+
+                alert2.setContentText(" A new Supplier has been created");
+            } else {
+                alert2.setContentText("تم انشاء مزود جديد");
+
+            }
+
+            alert2.showAndWait();
 
         } else if (count == 2) {
             System.out.println("Equal  update");
@@ -1387,27 +1478,27 @@ i=1000;
 
     @FXML
     private void M_Btn_Delete_Supplier(ActionEvent event) throws SQLException {
-        String sql1 = "DELETE FROM  `supplier`  WHERE SUPPLIER_NBER= " + Txfiled_Num_Supplier.getText();
-        System.out.println(sql1);
-        java.sql.Statement statement1 = connection.createStatement();
+          Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("");
+        alert.setHeaderText("");
+        if (count_Language == 0) {
+            alert.setContentText("This Supplier will be deleted ");
+        } else {
+            alert.setContentText("  سوف يتم حذف هذا المزود ");
 
-        clearSUP();
-        try {
+        }
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            // ... user chose OK
+            String deletSP = "DELETE FROM `requested_spare_parts` " + " WHERE SUPPLIER_NBER= " + Txfiled_Num_Supplier.getText();
+            String sql1 = "DELETE FROM  `supplier` " + " WHERE SUPPLIER_NBER= " +  Txfiled_Num_Supplier.getText();
+            System.out.println(deletSP);
+            System.out.println(sql1);
+            java.sql.Statement statement1 = connection.createStatement();
+            statement1.executeUpdate(deletSP);
             statement1.executeUpdate(sql1);
-
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setContentText("Deleted Successfully");
-                alert.showAndWait();
-                return;
-            }
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-            return;
+            clearSUP();
         }
 
     }

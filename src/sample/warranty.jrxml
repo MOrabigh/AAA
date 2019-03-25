@@ -184,7 +184,7 @@
 		<defaultValueExpression><![CDATA["C:\\Users\\algha\\Documents\\NetBeansProjects\\GP11\\src\\sample\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER ]]>
+		<![CDATA[SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER]]>
 	</queryString>
 	<field name="MO_NBER" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -315,7 +315,7 @@
 	<pageHeader>
 		<band height="126" splitType="Stretch">
 			<staticText>
-				<reportElement x="328" y="12" width="69" height="20" uuid="3a064564-945d-4783-946f-7899c26e08ef"/>
+				<reportElement x="328" y="14" width="37" height="20" uuid="3a064564-945d-4783-946f-7899c26e08ef"/>
 				<textElement textAlignment="Center">
 					<font size="15"/>
 				</textElement>
@@ -325,29 +325,18 @@
 				<reportElement x="0" y="62" width="555" height="64" uuid="00d96b90-5977-4217-a015-c581d353786d"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="453" y="90" width="95" height="20" uuid="1d7f5ca2-6ca5-4d7d-99c5-28b17e24141b"/>
-				<textElement textAlignment="Center">
-					<font size="15" isBold="true"/>
-				</textElement>
-				<text><![CDATA[تاريخ الاستلام]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="333" y="90" width="100" height="20" uuid="12150293-6d2a-4184-b209-b9bb4482bd0f"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="143" y="90" width="111" height="22" uuid="dfe1fc0c-f7c3-4466-a9b1-bd776d7d5f3d"/>
+				<reportElement x="433" y="90" width="111" height="22" uuid="dfe1fc0c-f7c3-4466-a9b1-bd776d7d5f3d"/>
 				<textElement textAlignment="Center">
 					<font size="15"/>
 				</textElement>
 				<text><![CDATA[تاريخ اصدار الفاتورة]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="215" y="12" width="100" height="20" uuid="171166b3-e2ce-47f3-be69-eba130c5ab3b"/>
+				<reportElement x="279" y="17" width="42" height="20" uuid="171166b3-e2ce-47f3-be69-eba130c5ab3b"/>
 				<textFieldExpression><![CDATA[$F{INVOICE_NBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="14" y="90" width="100" height="20" uuid="3daea9bd-5fdc-41c3-abf2-832e2aa7256c"/>
+				<reportElement x="312" y="90" width="100" height="20" uuid="3daea9bd-5fdc-41c3-abf2-832e2aa7256c"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>

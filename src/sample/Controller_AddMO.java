@@ -507,7 +507,34 @@ public class Controller_AddMO implements Initializable {
 
     @FXML
     private void M_Btn_Print_AddMo(ActionEvent event) throws JRException, SQLException {
+         if (count_Language == 0) {
         if (Selct_MoStatus_AddMO.getValue().equalsIgnoreCase("paid")) {
+            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('paid') AND m.MO_NBER ='" + Txfiled_MOnum_AddMO.getText() + "'";
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+
+            printreport print = new printreport();
+            String ss = Txfiled_MOnum_AddMO.getText();
+
+            print.showReportEN(ss);
+        } else if (Selct_MoStatus_AddMO.getValue().equalsIgnoreCase("created") || Selct_MoStatus_AddMO.getValue().equalsIgnoreCase("approved") || Selct_MoStatus_AddMO.getValue().equalsIgnoreCase("under maintenance") || Selct_MoStatus_AddMO.getValue().equalsIgnoreCase("other defects has been detected")) {
+            String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('created', 'approved', 'under maintenance', 'other defects has been detected') AND m.MO_NBER = '" + Txfiled_MOnum_AddMO.getText() + "'";
+            System.out.println(query);
+            java.sql.Statement statement1 = connection.createStatement();
+
+            printreport print = new printreport();
+            String ff = Txfiled_MOnum_AddMO.getText();
+            print.financialassessmentEN(ff);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Can not print this MO");
+            alert.showAndWait();
+            return;
+
+        }
+    } else if (count_Language==1){
+         if (Selct_MoStatus_AddMO.getValue().equalsIgnoreCase("paid")) {
             String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('paid') AND m.MO_NBER ='" + Txfiled_MOnum_AddMO.getText() + "'";
             System.out.println(query);
             java.sql.Statement statement1 = connection.createStatement();
@@ -525,19 +552,16 @@ public class Controller_AddMO implements Initializable {
             String ff = Txfiled_MOnum_AddMO.getText();
             print.financialassessment(ff);
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+              Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            if (count_Language == 0) {
-                alert.setContentText("Can not print this MO");
-            } else {
-                alert.setContentText("لا يمكن الطباعة");
-
-            }
-
+            alert.setContentText("لايمكن الطباعة");
             alert.showAndWait();
             return;
-        }
 
+            
+        }
+        
+    }
     }
 
     @FXML

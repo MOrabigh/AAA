@@ -38,6 +38,50 @@ public class printreport extends JFrame {
      public printreport() throws HeadlessException{
         
      } 
+     public void showReportEN (String ss)throws JRException{
+         
+             
+             JasperDesign jasperDesign = JRXmlLoader.load("C:\\Users\\algha\\Documents\\NetBeansProjects\\AAA\\src\\sample\\warrantyEN.jrxml");
+             String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('paid') AND m.MO_NBER ='" + ss+ "'";
+             
+             JRDesignQuery jrquery = new JRDesignQuery();
+             jrquery.setText(query);
+             jasperDesign.setQuery(jrquery);
+             JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+             
+             JasperPrint Jasperprint = JasperFillManager.fillReport(jasperReport, null,connection );
+             JRViewer viewer = new JRViewer (Jasperprint);
+             viewer.setOpaque(true);
+             viewer.setVisible(true);
+             
+             this.add(viewer);
+             this.setSize(900,500);
+              this.setVisible(true);
+             
+             
+             
+             
+         
+     }
+     public void financialassessmentEN(String ff) throws JRException{
+          JasperDesign jasperDesign = JRXmlLoader.load("C:\\Users\\algha\\Documents\\NetBeansProjects\\AAA\\src\\sample\\financialassessmentEN.jrxml");
+             String query = "SELECT * FROM `maintenance_operation` m JOIN `customer` r ON m.CUS_MOBILE_NBER  = r.CUS_MOBILE_NBER JOIN employee e ON m.EMPLOYEE_ID = e.EMPLOYEE_ID JOIN `require` a ON m.MO_NBER = a.MO_NBER JOIN `spare_parts` s ON a.SP_NBER = s.SP_NBER WHERE m.STATE IN ('created', 'approve', 'under maintenance', 'other defects has been detected') AND m.MO_NBER = '" + ff + "'";
+             JRDesignQuery jrquery = new JRDesignQuery();
+             jrquery.setText(query);
+             jasperDesign.setQuery(jrquery);
+             JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+             JasperPrint Jasperprint = JasperFillManager.fillReport(jasperReport, null,connection );
+             JRViewer viewer = new JRViewer (Jasperprint);
+             viewer.setOpaque(true);
+             viewer.setVisible(true);
+             
+             this.add(viewer);
+             this.setSize(900,500);
+              this.setVisible(true);
+             
+             
+         
+     } 
      public void showReport (String ss)throws JRException{
          
              

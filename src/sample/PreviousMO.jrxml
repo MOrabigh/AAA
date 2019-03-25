@@ -89,7 +89,7 @@
 			<staticText>
 				<reportElement x="184" y="20" width="205" height="34" uuid="cf69ede5-a478-464f-aa54-14adf56caf03"/>
 				<textElement textAlignment="Center">
-					<font size="20"/>
+					<font fontName="Arial" size="20" isBold="false" isItalic="false" isUnderline="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[عمليات الصيانة السابقة ]]></text>
 			</staticText>
